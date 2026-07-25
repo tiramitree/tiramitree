@@ -12,9 +12,11 @@ from online CI and independent review.
 - Pull request: [deepseek-ai/DeepEP#699](https://github.com/deepseek-ai/DeepEP/pull/699)
 - Upstream branch and base: `hybrid-ep` at
   `94a9f8f6b146c07d97ec58f67cd6d303296d6098`
-- Proposed commit: `c8ae684ce33daab189ad27e8b6d86fce996b263f`
+- Current PR head: `fc7dc205ef6fb19545f1a9b9d14c471b0017bcb0`
 - Current status: open, non-draft, and reported clean by GitHub at the latest
-  observation; no review, acceptance, or merge
+  observation. An automated collaborator review found a Python 3.8 test
+  incompatibility; the follow-up commit repaired it and responded to all three
+  inline comments. There is no human review, acceptance, or merge.
 
 ### Problem and proposed invariant
 
@@ -30,6 +32,9 @@ the separate runtime JIT compiler's C++17 setting unchanged.
 - A new standard-library regression test failed on the exact upstream base
   because the hardcoded standard was present.
 - The same test passed after the one-line source change.
+- After automated review, the guard was widened to catch appended and `cxx`
+  standard flags and was made Python 3.8 compatible.
+- The exact test passed under actual Python 3.8.10 and Python 3.12.10.
 - Python compilation and `git diff --check`: passed.
 - No NVCC/CUDA build, GPU workload, or training run was performed in this
   environment.
