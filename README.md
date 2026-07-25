@@ -45,6 +45,9 @@ execution, recovery, and reproducible long-running experiments.
 
 ## Open-source contributions
 
+[Detailed contribution log](https://github.com/tiramitree/tiramitree/blob/main/CONTRIBUTIONS.md)
+with commit-bound validation and current review state.
+
 - Agent-harness security: [ByteDance DeerFlow draft PR
   #4451](https://github.com/bytedance/deer-flow/pull/4451) proposes one shared
   executable-file classifier for archive installs and agent-managed skill
