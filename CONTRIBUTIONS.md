@@ -12,7 +12,7 @@ from online CI and independent review.
 - Pull request: [deepseek-ai/DeepEP#699](https://github.com/deepseek-ai/DeepEP/pull/699)
 - Upstream branch and base: `hybrid-ep` at
   `94a9f8f6b146c07d97ec58f67cd6d303296d6098`
-- Current PR head: `fc7dc205ef6fb19545f1a9b9d14c471b0017bcb0`
+- Current PR head: `fc7dc204499fe4b375e28dd2865bedac860a8967`
 - Current status: open, non-draft, and reported clean by GitHub at the latest
   observation. An automated collaborator review found a Python 3.8 test
   incompatibility; the follow-up commit repaired it and responded to all three
