@@ -50,8 +50,8 @@ execution, recovery, and reproducible long-running experiments.
   executable-file classifier for archive installs and agent-managed skill
   writes, with red/green regressions for code suffixes, extensionless
   shebangs, and nested-`scripts` false positives. It is a public draft pending
-  the project's required human line review and upstream review; it is not
-  accepted or merged.
+  the project's required human line review, contributor license agreement, and
+  upstream review; it is not accepted or merged.
 - Embodied-AI documentation: the exact correction in [AgiBot Genie Sim PR
   #177](https://github.com/AgibotTech/genie_sim/pull/177) is submitted and
   open; it is not accepted, merged, or an AgiBot endorsement.
