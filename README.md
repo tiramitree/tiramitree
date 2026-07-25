@@ -1,0 +1,48 @@
+# tiramitree
+
+Research engineer building auditable execution and evaluation harnesses for AI
+and embodied-research workflows.
+
+I work at the boundary between technical research and the systems that make
+research results trustworthy: evaluation protocols, provenance, fail-closed
+execution, recovery, and reproducible long-running experiments.
+
+## Current focus
+
+- experiment harnesses today; agent evaluation is a target application, not a
+  claimed deployment
+- 3D semantic scene completion and low-label SemanticKITTI protocols
+- embodied-AI simulation and benchmark reliability
+- experiment infrastructure, exact receipts, replay, and failure analysis
+- Python, C++, Linux, PyTorch, and systems-oriented testing
+
+## Selected evidence
+
+- BenchHandoff local, AI-assisted release candidate: a fail-closed CLI for
+  auditable, resumable sequential experiments. The current Windows/Python 3.12
+  run covered 121 tests (118 pass, 3 permission skips). Its content-addressed
+  resume decision binds reviewed evidence, outputs, and next inputs to exact
+  digests; after deliberate partial-output drift, a stale decision was refused
+  before harness mutation and a refreshed decision completed. One-command
+  generation and read-only verification produce a five-file, commit-bound
+  reproduction package recording 18 versus 13 child calls and 5 versus 0
+  repeated successful tasks with the same final output identity; an
+  appended-byte tamper copy was rejected with exit 30. The decision is not a
+  signature or global lock and assumes one trusted writer. These are local
+  synthetic counts, not speed, production, independent reproduction, or
+  adoption evidence. A canonical external-evidence ledger currently reports
+  zero independent reproductions, users, institutional adopters, and
+  third-party reviews; Issue submissions do not count until human-reviewed and
+  merged. Public links will replace this text only after the license, first
+  online CI run, and exact release artifact are verified.
+
+## Engineering principles
+
+- make the protocol inspectable before optimizing the result;
+- preserve failed runs as evidence rather than rewriting the story;
+- distinguish tested behavior, simulated behavior, and production behavior;
+- prefer one maintained upstream contribution over many disconnected demos.
+
+Open-source embodied-AI work: the exact documentation correction in
+[AgiBot Genie Sim PR #177](https://github.com/AgibotTech/genie_sim/pull/177)
+is submitted and open; it is not accepted, merged, or an AgiBot endorsement.
