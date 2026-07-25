@@ -1,75 +1,83 @@
 # tiramitree
 
-Research engineer building auditable execution and evaluation harnesses for AI
-and embodied-research workflows.
+I build auditable AI and research-engineering systems: evaluation harnesses,
+failure recovery, provenance, and reproducible execution for long-running
+experiments.
 
-I work at the boundary between technical research and the systems that make
-research results trustworthy: evaluation protocols, provenance, fail-closed
-execution, recovery, and reproducible long-running experiments.
+My current public work focuses on AI systems, agent evaluation infrastructure,
+and embodied/3D research engineering. Local tests, public CI, released
+artifacts, independent review, and external use are different kinds of
+evidence.
 
 ## Current focus
 
-- experiment harnesses today; agent evaluation is a target application, not a
-  claimed deployment
-- 3D semantic scene completion and low-label SemanticKITTI protocols
-- embodied-AI simulation and benchmark reliability
-- experiment infrastructure, exact receipts, replay, and failure analysis
+- auditable execution, evidence integrity, and failure recovery
+- agent evaluation and experiment harnesses, without deployment claims
+- embodied-AI simulation and benchmark control planes
 - Python, C++, Linux, PyTorch, and systems-oriented testing
 
-## Selected evidence
+## Flagship: BenchHandoff
 
-- BenchHandoff local, AI-assisted release candidate: a fail-closed CLI for
-  auditable, resumable sequential experiments. Its local Windows compatibility
-  matrix spans CPython 3.11.15, 3.12.13, 3.13.14, and 3.14.6; each of four
-  independent runs covered 122 tests (119 pass, 3 permission skips). This is
-  not one 488-test suite, Linux or online CI, or independent reproduction. Its
-  content-addressed resume decision binds reviewed evidence, outputs, and next
-  inputs to exact digests; after deliberate partial-output drift, a stale
-  decision was refused before harness mutation and a refreshed decision
-  completed. One-command
-  generation and read-only verification produce a five-file, commit-bound
-  reproduction package recording 18 versus 13 child calls and 5 versus 0
-  repeated successful tasks with the same final output identity; an
-  appended-byte tamper copy was rejected with exit 30. The decision is not a
-  signature or global lock and assumes one trusted writer. These are local
-  synthetic counts, not speed, production, independent reproduction, or
-  adoption evidence. A canonical external-evidence ledger currently reports
-  zero independent reproductions, users, institutional adopters, and
-  third-party reviews; Issue submissions do not count until human-reviewed and
-  merged. Public links will replace this text only after the license, first
-  online CI run, and exact release artifact are verified.
+[Repository](https://github.com/tiramitree/benchhandoff) |
+[v0.1.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.1.0) |
+[public CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml)
+
+BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
+experiment batches. It fingerprints suites and declared inputs, preserves
+failed attempts, verifies completed outputs before skipping them, and can bind
+an approved resume to the exact evidence reviewed before mutation. Cooperating
+local writers are serialized, and orphaned lock records require an explicit,
+evidence-bound recovery action.
+
+Public, commit-bound evidence for
+[`98e7a9e9227f39fee16b9d04c8f68ea89273a4fe`](https://github.com/tiramitree/benchhandoff/commit/98e7a9e9227f39fee16b9d04c8f68ea89273a4fe):
+
+- eight Ubuntu 24.04 / Windows Server 2025 jobs across CPython 3.11-3.14 each
+  ran all 158 tests with no failures, errors, or skips;
+- the dependent evidence job generated and re-verified a five-file synthetic
+  package;
+- the package job built, inspected, installed, and smoke-tested the exact
+  released wheel and sdist; and
+- the deterministic synthetic comparison records 18 child calls for naive
+  restart versus 13 for resume, with 5 versus 0 repeated successful tasks and
+  equal final output identity.
+
+Those are synthetic work counts and control-plane checks, not wall-clock,
+production, security-boundary, distributed-systems, or model-quality results.
+The release is GitHub-only: there is no PyPI package, production support or
+SLA, independent reproduction, third-party review, or verified external
+adoption. The external-evidence ledger keeps those counts at zero until such
+evidence exists.
 
 ## Engineering principles
 
 - make the protocol inspectable before optimizing the result;
 - preserve failed runs as evidence rather than rewriting the story;
 - distinguish tested behavior, simulated behavior, and production behavior;
-- prefer one maintained upstream contribution over many disconnected demos.
+- prefer a small number of deep, owned projects over disconnected demos.
 
-## Open-source contributions
+## Embodied-systems experiment
 
-[Detailed contribution log](https://github.com/tiramitree/tiramitree/blob/main/CONTRIBUTIONS.md)
-with commit-bound validation and current review state.
+[Personal Genie Sim fork branch](https://github.com/tiramitree/genie_sim/tree/portfolio/resumable-benchmark-batch)
 
-- AI-systems build compatibility: [DeepSeek DeepEP PR
-  #699](https://github.com/deepseek-ai/DeepEP/pull/699) removes a hardcoded
-  C++17 flag from the hybrid-EP PyTorch extension and adds a CPU-verifiable
-  red/green regression. It is open and unreviewed; no CUDA build, GPU run,
-  acceptance, or merge is claimed.
-- Agent-orchestration reliability: [ByteDance DeerFlow draft PR
-  #4455](https://github.com/bytedance/deer-flow/pull/4455) separates launch
-  failures from post-launch bookkeeping failures so a confirmed agent run
-  keeps its per-task active slot and run identifier instead of permitting a
-  duplicate dispatch. A real-SQLite regression went red on the exact base and
-  green with the repair; 42 related tests pass. Human line review, the
-  contributor license agreement, and upstream review remain pending.
-- Agent-harness security: [ByteDance DeerFlow draft PR
-  #4451](https://github.com/bytedance/deer-flow/pull/4451) proposes one shared
-  executable-file classifier for archive installs and agent-managed skill
-  writes, with red/green regressions for code suffixes, extensionless
-  shebangs, and nested-`scripts` false positives. It is a public draft pending
-  the project's required human line review, contributor license agreement, and
-  upstream review; it is not accepted or merged.
-- Embodied-AI documentation: the exact correction in [AgiBot Genie Sim PR
-  #177](https://github.com/AgibotTech/genie_sim/pull/177) is submitted and
-  open; it is not accepted, merged, or an AgiBot endorsement.
+This public branch adds an opt-in, exact, inclusive `--resume-from` anchor to
+the sequential benchmark CLI while preserving the default order and aggregate
+failure behavior. At exact branch head
+[`f50a597502903463101b377465a1d65a8a6abb6f`](https://github.com/tiramitree/genie_sim/commit/f50a597502903463101b377465a1d65a8a6abb6f),
+local red-before/green-after validation ran eight tests: the exact upstream
+base failed and the public branch head passed. A real-config dry run selected
+the expected 9 configurations from a 10-config set with simulator launch mocked.
+
+This is a personal-fork control-plane experiment, not a new upstream
+submission, maintainer-requested change, review, acceptance, merge, AgiBot
+endorsement, simulator/GPU result, model-quality result, or external-use claim.
+
+## Engineering record
+
+The [status-aware public work log](CONTRIBUTIONS.md) preserves earlier proposed
+upstream changes with their actual review state and validation limits. A
+submitted or mergeable change is not described as accepted.
+
+OpenAI Codex materially assisted implementation, testing, documentation, and
+publication workflows. Human identity, legal commitments, and claims of
+independent review remain human-only.

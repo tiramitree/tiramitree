@@ -1,11 +1,54 @@
-# Open-source contribution log
+# Public engineering work log
 
-Updated: 2026-07-25
+Updated: 2026-07-26
 
 This page is a status-aware record of public engineering work. A submitted
 change is not counted as accepted until the upstream repository merges it.
 Material AI assistance is disclosed, and local validation is kept separate
 from online CI and independent review.
+
+The current portfolio emphasis is work in repositories owned by
+`tiramitree`. The upstream proposals below remain as historical, status-aware
+records; this page does not imply a plan to open new upstream pull requests,
+issues, or discussions.
+
+## Owned repository: BenchHandoff v0.1.0
+
+- Repository: [tiramitree/benchhandoff](https://github.com/tiramitree/benchhandoff)
+- Release:
+  [v0.1.0](https://github.com/tiramitree/benchhandoff/releases/tag/v0.1.0)
+- Exact source: `98e7a9e9227f39fee16b9d04c8f68ea89273a4fe`
+- Current status: Apache-2.0, GitHub-only early release
+
+All eight Ubuntu 24.04 / Windows Server 2025 jobs across CPython 3.11-3.14 ran
+all 158 tests with no failures, errors, or skips. The dependent evidence and
+exact-distribution jobs also passed. The release assets are the exact wheel,
+sdist, checksums, and synthetic records downloaded from that CI run and
+re-verified after publication.
+
+The synthetic comparison records 18 versus 13 child calls and 5 versus 0
+repeated successful tasks, with equal final output identity. These are
+deterministic control-plane work counts, not timing, production, security,
+model-quality, independent-review, or adoption evidence. No TestPyPI or PyPI
+package was published, and the external-evidence ledger remains zero.
+
+## Personal fork: Genie Sim resumable benchmark batch
+
+- Public branch:
+  [portfolio/resumable-benchmark-batch](https://github.com/tiramitree/genie_sim/tree/portfolio/resumable-benchmark-batch)
+- Exact head: `f50a597502903463101b377465a1d65a8a6abb6f`
+- Current status: personal-fork experiment; not submitted upstream, reviewed,
+  accepted, or merged
+
+The branch adds an opt-in, exact, inclusive `--resume-from` anchor after the
+existing robot/category selection. In a local red-before/green-after run, the
+eight-test suite failed on the exact upstream base and passed at the public
+branch head. With simulator launch mocked, a real-config dry run selected the
+expected 9 configurations from a 10-config set.
+
+No Isaac Sim, GPU benchmark, episode, scientific metric, external operator, or
+maintainer-demand claim is made. This branch is not an AgiBot contribution or
+endorsement.
 
 ## DeepSeek DeepEP: PyTorch-selected C++ standard for hybrid EP
 
