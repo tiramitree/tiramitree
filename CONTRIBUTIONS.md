@@ -7,6 +7,37 @@ change is not counted as accepted until the upstream repository merges it.
 Material AI assistance is disclosed, and local validation is kept separate
 from online CI and independent review.
 
+## DeepSeek DeepEP: PyTorch-selected C++ standard for hybrid EP
+
+- Pull request: [deepseek-ai/DeepEP#699](https://github.com/deepseek-ai/DeepEP/pull/699)
+- Upstream branch and base: `hybrid-ep` at
+  `94a9f8f6b146c07d97ec58f67cd6d303296d6098`
+- Proposed commit: `c8ae684ce33daab189ad27e8b6d86fce996b263f`
+- Current status: open, non-draft, and reported clean by GitHub at the latest
+  observation; no review, acceptance, or merge
+
+### Problem and proposed invariant
+
+`hybrid_ep_cpp` forced NVCC to compile with `-std=c++17`, even when current
+PyTorch headers require C++20. Its sibling `deep_ep_cpp` already leaves the
+standard unset and inherits PyTorch's compatible choice.
+
+The proposed change removes only the extension's hardcoded standard. It leaves
+the separate runtime JIT compiler's C++17 setting unchanged.
+
+### Validation
+
+- A new standard-library regression test failed on the exact upstream base
+  because the hardcoded standard was present.
+- The same test passed after the one-line source change.
+- Python compilation and `git diff --check`: passed.
+- No NVCC/CUDA build, GPU workload, or training run was performed in this
+  environment.
+
+This is a submitted build-compatibility proposal with a CPU-verifiable
+structural regression, not a hardware validation, performance result, accepted
+DeepSeek contribution, or DeepSeek endorsement.
+
 ## ByteDance DeerFlow: executable-scan policy parity
 
 - Pull request: [bytedance/deer-flow#4451](https://github.com/bytedance/deer-flow/pull/4451)
