@@ -43,6 +43,15 @@ execution, recovery, and reproducible long-running experiments.
 - distinguish tested behavior, simulated behavior, and production behavior;
 - prefer one maintained upstream contribution over many disconnected demos.
 
-Open-source embodied-AI work: the exact documentation correction in
-[AgiBot Genie Sim PR #177](https://github.com/AgibotTech/genie_sim/pull/177)
-is submitted and open; it is not accepted, merged, or an AgiBot endorsement.
+## Open-source contributions
+
+- Agent-harness security: [ByteDance DeerFlow draft PR
+  #4451](https://github.com/bytedance/deer-flow/pull/4451) proposes one shared
+  executable-file classifier for archive installs and agent-managed skill
+  writes, with red/green regressions for code suffixes, extensionless
+  shebangs, and nested-`scripts` false positives. It is a public draft pending
+  the project's required human line review and upstream review; it is not
+  accepted or merged.
+- Embodied-AI documentation: the exact correction in [AgiBot Genie Sim PR
+  #177](https://github.com/AgibotTech/genie_sim/pull/177) is submitted and
+  open; it is not accepted, merged, or an AgiBot endorsement.
