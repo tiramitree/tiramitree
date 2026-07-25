@@ -43,6 +43,47 @@ This is a submitted build-compatibility proposal with a CPU-verifiable
 structural regression, not a hardware validation, performance result, accepted
 DeepSeek contribution, or DeepSeek endorsement.
 
+## ByteDance DeerFlow: post-launch scheduler slot preservation
+
+- Pull request: [bytedance/deer-flow#4455](https://github.com/bytedance/deer-flow/pull/4455)
+- Upstream base: `3b77a7401b549fa6da4c8e1f8c2c0081d56e3d7a`
+- Proposed commit: `2961a06d86798c5d934b4729179ebe7923793613`
+- Current status: public draft; required human line review and CLA are pending;
+  no upstream review, acceptance, or merge
+
+### Problem
+
+The scheduled-task partial unique index permits only one queued or running row
+per task. After `_launch_run` returned a live run, however, a transient failure
+in the queued-to-running bookkeeping write fell into the broad launch-failure
+handler. That handler marked the row failed, released its unique active slot,
+discarded the returned run identifier, and allowed a later dispatch to launch
+duplicate work while the first run was still live.
+
+### Proposed invariant
+
+Only failures before a valid run and thread identifier are returned are launch
+failures. Later bookkeeping errors keep the task-run row non-terminal, retain
+the launched identifiers, and best-effort retry only the idempotent row update;
+the non-idempotent parent run-count update is not blindly retried.
+
+### Validation
+
+- The real-SQLite regression failed on the exact base because the first
+  dispatch returned `failed`.
+- After the repair, the same regression retained `run-1`, rejected the second
+  dispatch, and kept exactly one active running row bound to `run-1`.
+- Scheduler service, race, repository, and router suites: 42 passed.
+- Full backend lint and formatting checks: passed; 960 Python files were
+  already formatted.
+- The full Windows backend run reported 9,088 passed, 94 skipped, and 98
+  failed. Every one of those 98 nodes also failed in an untouched detached
+  worktree at the exact base commit under the same locked environment; none
+  were scheduler tests. This is baseline parity, not a full-suite pass.
+
+This is a proposed scheduler-invariant repair, not a production-incident,
+upstream acceptance, deployment, adoption, or ByteDance endorsement claim.
+
 ## ByteDance DeerFlow: executable-scan policy parity
 
 - Pull request: [bytedance/deer-flow#4451](https://github.com/bytedance/deer-flow/pull/4451)

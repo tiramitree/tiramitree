@@ -53,6 +53,13 @@ with commit-bound validation and current review state.
   C++17 flag from the hybrid-EP PyTorch extension and adds a CPU-verifiable
   red/green regression. It is open and unreviewed; no CUDA build, GPU run,
   acceptance, or merge is claimed.
+- Agent-orchestration reliability: [ByteDance DeerFlow draft PR
+  #4455](https://github.com/bytedance/deer-flow/pull/4455) separates launch
+  failures from post-launch bookkeeping failures so a confirmed agent run
+  keeps its per-task active slot and run identifier instead of permitting a
+  duplicate dispatch. A real-SQLite regression went red on the exact base and
+  green with the repair; 42 related tests pass. Human line review, the
+  contributor license agreement, and upstream review remain pending.
 - Agent-harness security: [ByteDance DeerFlow draft PR
   #4451](https://github.com/bytedance/deer-flow/pull/4451) proposes one shared
   executable-file classifier for archive installs and agent-managed skill
