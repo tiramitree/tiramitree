@@ -48,6 +48,11 @@ execution, recovery, and reproducible long-running experiments.
 [Detailed contribution log](https://github.com/tiramitree/tiramitree/blob/main/CONTRIBUTIONS.md)
 with commit-bound validation and current review state.
 
+- AI-systems build compatibility: [DeepSeek DeepEP PR
+  #699](https://github.com/deepseek-ai/DeepEP/pull/699) removes a hardcoded
+  C++17 flag from the hybrid-EP PyTorch extension and adds a CPU-verifiable
+  red/green regression. It is open and unreviewed; no CUDA build, GPU run,
+  acceptance, or merge is claimed.
 - Agent-harness security: [ByteDance DeerFlow draft PR
   #4451](https://github.com/bytedance/deer-flow/pull/4451) proposes one shared
   executable-file classifier for archive installs and agent-managed skill
