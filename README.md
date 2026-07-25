@@ -19,11 +19,14 @@ execution, recovery, and reproducible long-running experiments.
 ## Selected evidence
 
 - BenchHandoff local, AI-assisted release candidate: a fail-closed CLI for
-  auditable, resumable sequential experiments. The current Windows/Python 3.12
-  run covered 121 tests (118 pass, 3 permission skips). Its content-addressed
-  resume decision binds reviewed evidence, outputs, and next inputs to exact
-  digests; after deliberate partial-output drift, a stale decision was refused
-  before harness mutation and a refreshed decision completed. One-command
+  auditable, resumable sequential experiments. Its local Windows compatibility
+  matrix spans CPython 3.11.15, 3.12.13, 3.13.14, and 3.14.6; each of four
+  independent runs covered 122 tests (119 pass, 3 permission skips). This is
+  not one 488-test suite, Linux or online CI, or independent reproduction. Its
+  content-addressed resume decision binds reviewed evidence, outputs, and next
+  inputs to exact digests; after deliberate partial-output drift, a stale
+  decision was refused before harness mutation and a refreshed decision
+  completed. One-command
   generation and read-only verification produce a five-file, commit-bound
   reproduction package recording 18 versus 13 child calls and 5 versus 0
   repeated successful tasks with the same final output identity; an
