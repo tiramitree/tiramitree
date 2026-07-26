@@ -1,6 +1,6 @@
 # Public engineering work log
 
-Updated: 2026-07-26
+Updated: 2026-07-27
 
 This page is a status-aware record of public engineering work. A submitted
 change is not counted as accepted until the upstream repository merges it.
@@ -17,14 +17,16 @@ issues, or discussions.
 - Repository: [tiramitree/benchhandoff](https://github.com/tiramitree/benchhandoff)
 - Release:
   [v0.1.0](https://github.com/tiramitree/benchhandoff/releases/tag/v0.1.0)
-- Exact source: `98e7a9e9227f39fee16b9d04c8f68ea89273a4fe`
+- Current source: `e5d687d967361ed55751551e9454ce3593a10ffc`
+- Recreated tag commit: `98e7a9e9227f39fee16b9d04c8f68ea89273a4fe`
 - Current status: Apache-2.0, GitHub-only early release
 
-All eight Ubuntu 24.04 / Windows Server 2025 jobs across CPython 3.11-3.14 ran
-all 158 tests with no failures, errors, or skips. The dependent evidence and
-exact-distribution jobs also passed. The release assets are the exact wheel,
-sdist, checksums, and synthetic records downloaded from that CI run and
-re-verified after publication.
+The current-main run succeeded and the recreated-tag run passed all 10 jobs,
+including eight Ubuntu and Windows runtime jobs across CPython 3.11-3.14 plus
+the dependent evidence and exact-distribution jobs. All eight recreated
+Release assets passed server-digest and public-redownload name, size, and
+SHA-256 checks. The exact wheel also passed an isolated install and
+recovery/resume/verify smoke test.
 
 The synthetic comparison records 18 versus 13 child calls and 5 versus 0
 repeated successful tasks, with equal final output identity. These are
@@ -32,11 +34,43 @@ deterministic control-plane work counts, not timing, production, security,
 model-quality, independent-review, or adoption evidence. No TestPyPI or PyPI
 package was published, and the external-evidence ledger remains zero.
 
+## Owned repository: EffectWitness v0.1.0
+
+- Repository:
+  [tiramitree/effect-witness](https://github.com/tiramitree/effect-witness)
+- Pre-release:
+  [v0.1.0](https://github.com/tiramitree/effect-witness/releases/tag/v0.1.0)
+- Evidence source: `f4575f88cf6a17f6c32bd2c7462063142d37c56a`
+- Current main and lightweight tag:
+  `72474eae59931cfe0be6501cd340d07c34a100ca`
+- Main CI:
+  [run 30216628502](https://github.com/tiramitree/effect-witness/actions/runs/30216628502)
+- Tag CI:
+  [run 30216628917](https://github.com/tiramitree/effect-witness/actions/runs/30216628917)
+- Current status: Apache-2.0, public pre-alpha GitHub pre-release
+
+EffectWitness compares declared MCP tool-effect hints, client observations, and
+durable synthetic SQLite effect facts under ten registered loopback scenarios.
+The matrix contains 3 `MATCH`, 4 `MISMATCH`, and 3 `NOT_APPLICABLE`
+declared-contract classifications. Main and tag CI each passed all seven jobs,
+including Ubuntu and Windows tests for Python 3.11-3.13.
+
+All five public assets passed GitHub digest and fresh-download checksum checks.
+The source-bound reference ZIP also passed the bundled schema-v2 offline
+verifier. An intermediate history commit can check out its generated JUnit file
+with normalized line endings; the current main/tag revision fixes that and is
+the only verified release state.
+
+This is controlled synthetic loopback evidence, not a success rate, model
+score, arbitrary-tool exactly-once guarantee, official MCP conformance,
+production or distributed correctness, security result, independent review,
+external use, adoption, or recruiting signal. No PyPI package was published.
+
 ## Personal fork: Genie Sim resumable benchmark batch
 
 - Public branch:
   [portfolio/resumable-benchmark-batch](https://github.com/tiramitree/genie_sim/tree/portfolio/resumable-benchmark-batch)
-- Exact head: `f50a597502903463101b377465a1d65a8a6abb6f`
+- Exact head: `a61287f0260ee4e18689e8e4ce16218a2cb839f5`
 - Current status: personal-fork experiment; not submitted upstream, reviewed,
   accepted, or merged
 
@@ -55,7 +89,7 @@ endorsement.
 - Pull request: [deepseek-ai/DeepEP#699](https://github.com/deepseek-ai/DeepEP/pull/699)
 - Upstream branch and base: `hybrid-ep` at
   `94a9f8f6b146c07d97ec58f67cd6d303296d6098`
-- Current PR head: `fc7dc204499fe4b375e28dd2865bedac860a8967`
+- Current PR head: `7f3d6d8c41a84c481167785bd559688bd50dbc34`
 - Current status: open, non-draft, and reported clean by GitHub at the latest
   observation. An automated collaborator review found a Python 3.8 test
   incompatibility; the follow-up commit repaired it and responded to all three
@@ -90,7 +124,7 @@ DeepSeek contribution, or DeepSeek endorsement.
 
 - Pull request: [bytedance/deer-flow#4455](https://github.com/bytedance/deer-flow/pull/4455)
 - Upstream base: `3b77a7401b549fa6da4c8e1f8c2c0081d56e3d7a`
-- Proposed commit: `2961a06d86798c5d934b4729179ebe7923793613`
+- Current PR head: `bbb28277108830b5f0c21ad9c30800b1d00f205f`
 - Current status: public draft; required human line review and CLA are pending;
   no upstream review, acceptance, or merge
 
@@ -131,7 +165,7 @@ upstream acceptance, deployment, adoption, or ByteDance endorsement claim.
 
 - Pull request: [bytedance/deer-flow#4451](https://github.com/bytedance/deer-flow/pull/4451)
 - Upstream base: `3b77a7401b549fa6da4c8e1f8c2c0081d56e3d7a`
-- Proposed commit: `ffc62e8367daa0b0f52a4562ca9bef1906d51514`
+- Current PR head: `44e0620d62cda9b71a4f03ccd1232ee7c038a53f`
 - Current status: public draft; required human line review and CLA are pending;
   no upstream review or acceptance
 
@@ -175,7 +209,7 @@ endorsement.
 
 - Pull request: [AgibotTech/genie_sim#177](https://github.com/AgibotTech/genie_sim/pull/177)
 - Upstream base: `da424345f3a2e851b5f342aeed8e5616fc210f0e`
-- Proposed commit: `e068d1fb049e32a36a34398d9c1b163855736f35`
+- Current PR head: `3db1f6835ad88df01bde1a24a3a153727e21f558`
 - Current status: open and mergeable at the latest observation; no review,
   acceptance, or merge
 
@@ -192,7 +226,7 @@ execution claim, accepted contribution, or AgiBot endorsement.
 ## Owned-repository governance: FDE claim boundaries
 
 - Pull request: [tiramitree/fde-ai-systems-portfolio#19](https://github.com/tiramitree/fde-ai-systems-portfolio/pull/19)
-- Commit: `35deb82a327df6e51e173cc3c5ab115363b553d0`
+- Current PR head: `cf124862b319094997b77b4dbd538ca7914409d4`
 - Current status: open; online quality gate passed; protected merge still
   requires a genuine non-author code-owner and last-push approval
 
