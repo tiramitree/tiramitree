@@ -19,8 +19,8 @@ external use, and production validation are different kinds of evidence.
 ## EffectWitness
 
 [Repository](https://github.com/tiramitree/effect-witness) |
-[v0.2.1 pre-release](https://github.com/tiramitree/effect-witness/releases/tag/v0.2.1) |
-[public tag CI](https://github.com/tiramitree/effect-witness/actions/runs/30257552654)
+[v0.3.3 pre-release](https://github.com/tiramitree/effect-witness/releases/tag/v0.3.3) |
+[public tag CI](https://github.com/tiramitree/effect-witness/actions/runs/30277977090)
 
 EffectWitness is an Apache-2.0 workbench for comparing declared MCP tool
 effect hints, client observations, and durable effects under ambiguous
@@ -28,26 +28,36 @@ failures. It records declaration, observation, decision, and effect facts
 separately instead of treating a successful-looking response as proof of an
 external effect.
 
-Version `v0.2.1` carries the exact, version-pinned stdio lane introduced in
-`v0.2.0` for the official MCP filesystem server. Five registered inputs are
-each called twice and bracketed by fail-closed S0/S1/S2 relative byte-tree
-observations. Separately, `v0.2.1` replaces the schema-v2 post-timeout fixed
-wait with a successful transport-ready barrier. The committed Windows
-reference contains normalized hashes, bounded facts, JUnit, provenance, and a
-manifest; public tag CI separately generates and verifies fresh Windows and
-Ubuntu observations.
+Version `v0.3.3` adds a LangGraph replay lane pinned to LangGraph 1.2.9,
+checkpoint 4.1.1, SQLite checkpoint 3.1.0, sqlite-vec 0.1.9, MCP 1.28.1,
+Node 24.18.0, and the official MCP filesystem server 2026.7.10. Four
+registered scenarios run for ten rounds each across separate fault and resume
+processes. The normalized artifact records 80 worker process facts and 60
+mutating-call observations while excluding checkpoint databases, raw tool
+arguments and responses, paths, environment values, process identifiers, and
+timestamps. No model API or paid service is used.
+
+The same release retains the exact version-pinned stdio lane for five
+registered official-filesystem inputs and the synthetic schema-v2 controls
+for false effect hints, ambiguous transport outcomes, reconciliation, and
+eight-call concurrency. Producers fail closed instead of sealing a partial
+artifact when any registered expectation is missed. Public tag CI passed all
+11 jobs and separately generated and verified fresh Windows and Ubuntu
+filesystem and LangGraph observations.
 
 The lightweight tag resolves to
-[`e0e9ce9c8fc14ea15534905afd2b1e1b08cc5ac9`](https://github.com/tiramitree/effect-witness/commit/e0e9ce9c8fc14ea15534905afd2b1e1b08cc5ac9).
-The wheel excludes `integrations/` metadata and Node/npm/runtime payloads. For
-the external dependency, the source distribution adds only the exact package
-manifest, lock, and provenance metadata needed to prepare and verify it; it
-does not redistribute the dependency or runtime.
+[`2a1e23df7bd9d1627ea06419053261e49e375d95`](https://github.com/tiramitree/effect-witness/commit/2a1e23df7bd9d1627ea06419053261e49e375d95).
+The release contains only a wheel and source distribution. The wheel excludes
+`integrations/` metadata and Node/npm/runtime payloads; the source distribution
+adds only the exact manifests, locks, constraints, and provenance metadata
+needed to prepare and verify external dependencies, not the dependencies or
+runtimes themselves.
 
 The observations are source-, version-, input-, and OS-bound. They do not
-establish exactly-once execution, package-wide correctness, official MCP
-conformance, security, performance, production reliability, independent
-review, external use, or adoption.
+establish exactly-once execution, arbitrary LangGraph or MCP correctness,
+package-wide correctness, official conformance, SQLite crash consistency,
+security, performance, production reliability, independent review, external
+use, or adoption.
 
 ## CacheInvariant
 
