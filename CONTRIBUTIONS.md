@@ -1,6 +1,7 @@
 # Public engineering work log
 
-Updated: 2026-07-27
+Last edited: 2026-07-28. Unchanged sections retain their recorded observation
+boundary and are not a current upstream-status refresh.
 
 This page is a status-aware record of public engineering work. A submitted
 change is not counted as accepted until the upstream repository merges it.
@@ -12,27 +13,32 @@ The current portfolio emphasis is work in repositories owned by
 records; this page does not imply a plan to open new upstream pull requests,
 issues, or discussions.
 
-## Owned repository: BenchHandoff v0.1.0
+## Owned repository: BenchHandoff v0.2.0
 
 - Repository: [tiramitree/benchhandoff](https://github.com/tiramitree/benchhandoff)
 - Release:
-  [v0.1.0](https://github.com/tiramitree/benchhandoff/releases/tag/v0.1.0)
-- Current source: `e5d687d967361ed55751551e9454ce3593a10ffc`
-- Recreated tag commit: `98e7a9e9227f39fee16b9d04c8f68ea89273a4fe`
-- Current status: Apache-2.0, GitHub-only early release
+  [v0.2.0](https://github.com/tiramitree/benchhandoff/releases/tag/v0.2.0)
+- Annotated tag commit: `c466ea30a58782e60dde0ee847977957641d8850`
+- Current status: Apache-2.0, GitHub-only early-alpha release
 
-The current-main run succeeded and the recreated-tag run passed all 10 jobs,
-including eight Ubuntu and Windows runtime jobs across CPython 3.11-3.14 plus
-the dependent evidence and exact-distribution jobs. All eight recreated
-Release assets passed server-digest and public-redownload name, size, and
-SHA-256 checks. The exact wheel also passed an isolated install and
-recovery/resume/verify smoke test.
+Version 2 binds a declared context descriptor, resolved executable bytes and
+path identity, a minimal non-inheriting environment, and one platform process
+scope while retaining version 1 compatibility. Windows uses a Job Object;
+Linux uses cooperative session/process-group cleanup.
 
-The synthetic comparison records 18 versus 13 child calls and 5 versus 0
-repeated successful tasks, with equal final output identity. These are
-deterministic control-plane work counts, not timing, production, security,
-model-quality, independent-review, or adoption evidence. No TestPyPI or PyPI
-package was published, and the external-evidence ledger remains zero.
+The release-build and tag runs each passed all 10 jobs. In each run, the eight
+Ubuntu 24.04 and Windows Server 2025 jobs across CPython 3.11-3.14 ran 186
+tests with no failures, errors, or skips. The dependent jobs verified the
+canonical five-file synthetic evidence and one exact installed distribution.
+All eight Release assets matched the CI artifacts by name, size, and SHA-256
+after a fresh download. The downloaded wheel repeated the version 1
+failure/resume/verify and version 2 context-bound start/verify smokes.
+
+These are maintainer-operated synthetic control-plane checks, not a sandbox,
+hostile-code containment, remote attestation, timing or real-workload
+performance, production validation, independent review, external use, or
+adoption evidence. No TestPyPI or PyPI package was published. The external
+evidence ledger, as of 2026-07-24, remains zero.
 
 ## Owned repository: EffectWitness v0.1.0
 

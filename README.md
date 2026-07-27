@@ -98,20 +98,31 @@ independent reproduction, external review, or adoption.
 ## BenchHandoff
 
 [Repository](https://github.com/tiramitree/benchhandoff) |
-[v0.1.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.1.0) |
-[public tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml)
+[v0.2.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.2.0) |
+[release-build CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
+[tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml)
 
 BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
 experiment batches. It fingerprints suites and declared inputs, preserves
 failed attempts, verifies completed outputs before skipping them, and binds an
 approved resume to the exact evidence reviewed before mutation.
 
-The recreated v0.1.0 tag resolves to
-[`98e7a9e9227f39fee16b9d04c8f68ea89273a4fe`](https://github.com/tiramitree/benchhandoff/commit/98e7a9e9227f39fee16b9d04c8f68ea89273a4fe).
-Its public tag CI passed ten jobs across Ubuntu and Windows. The deterministic
-synthetic comparison records work-count and recovery behavior, not wall-clock
-performance, distributed correctness, production readiness, security, model
-quality, or external adoption.
+Version `v0.2.0` adds a byte-bound execution-context descriptor, resolved
+executable content and path identity, a minimal non-inheriting launch
+environment, Windows Job Object lifecycle control, and cooperative Linux
+session/process-group cleanup while retaining version 1 compatibility.
+
+The annotated tag resolves to
+[`c466ea30a58782e60dde0ee847977957641d8850`](https://github.com/tiramitree/benchhandoff/commit/c466ea30a58782e60dde0ee847977957641d8850).
+Both the release-build and tag runs passed all ten jobs. Each of the eight
+Ubuntu 24.04 and Windows Server 2025 jobs across CPython 3.11-3.14 ran 186
+tests with no failures, errors, or skips; the dependent jobs verified the
+synthetic evidence and exact installed distribution.
+
+The eight Release assets were downloaded and matched byte-for-byte to the
+release-build artifacts. These are maintainer-operated synthetic checks, not
+a sandbox, hostile-code containment, remote attestation, production
+reliability, independent reproduction or review, external use, or adoption.
 
 ## Engineering principles
 
