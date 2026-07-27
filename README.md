@@ -63,6 +63,7 @@ use, or adoption.
 
 [Repository](https://github.com/tiramitree/cache-invariant) |
 [v0.3.0 pre-release](https://github.com/tiramitree/cache-invariant/releases/tag/v0.3.0) |
+[public main CI](https://github.com/tiramitree/cache-invariant/actions/runs/30293701488) |
 [public tag CI](https://github.com/tiramitree/cache-invariant/actions/runs/30293833809)
 
 CacheInvariant is an Apache-2.0 lab for version-pinned inference-cache
@@ -82,9 +83,9 @@ reuse-disabled controls report zero.
 The committed Windows schema-v3 reference records 77/77 registered engineering
 invariants as true and passes the bundled offline verifier, which also retains
 support for the 57-invariant v0.2.0 and 29-invariant v0.1.0 references. Public
-tag CI passed all nine jobs and separately runs the exact integration on
-Windows and Ubuntu, plus distribution and Python 3.11-3.13 quality jobs. The
-lightweight tag resolves to
+main and tag CI each passed all nine jobs and separately run the exact
+integration on Windows and Ubuntu, plus distribution and Python 3.11-3.13
+quality jobs. The lightweight tag resolves to
 [`203f84a42bb7fb841abd3c1f5d221b0bed6de289`](https://github.com/tiramitree/cache-invariant/commit/203f84a42bb7fb841abd3c1f5d221b0bed6de289).
 
 The release contains only the wheel and source distribution; it does not
