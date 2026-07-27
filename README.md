@@ -62,24 +62,28 @@ use, or adoption.
 ## CacheInvariant
 
 [Repository](https://github.com/tiramitree/cache-invariant) |
-[v0.1.0 pre-release](https://github.com/tiramitree/cache-invariant/releases/tag/v0.1.0) |
-[public tag CI](https://github.com/tiramitree/cache-invariant/actions/runs/30255550315)
+[v0.2.0 pre-release](https://github.com/tiramitree/cache-invariant/releases/tag/v0.2.0) |
+[public tag CI](https://github.com/tiramitree/cache-invariant/actions/runs/30287383452)
 
 CacheInvariant is an Apache-2.0 lab for version-pinned inference-cache
-correctness and slot isolation. It exercises the exact `llama.cpp b10107` CPU
-runtime with a tiny pinned fixture and records request registration, prompt
-work, cancellation/reuse, state save/restore, and a full local process restart.
+correctness and bounded slot-isolation protocols. It exercises the exact
+`llama.cpp b10107` CPU runtime with a tiny pinned fixture and records request
+registration, prompt work, cancellation/reuse, state save/restore, a full
+local process restart, and both registered orders of a two-stream cancellation
+and reuse protocol.
 
-The committed Windows reference records 29/29 registered engineering
-invariants as true and passes the bundled offline verifier. Public tag CI
-separately runs the exact integration on Windows and Ubuntu, plus distribution
-and Python 3.11-3.13 quality jobs. The lightweight tag resolves to
-[`ab23512b8009de4895e911b4727666bb79d5b5e8`](https://github.com/tiramitree/cache-invariant/commit/ab23512b8009de4895e911b4727666bb79d5b5e8).
+The committed v0.2.0 Windows reference records 57/57 registered engineering
+invariants as true and passes the bundled offline verifier, which also retains
+support for the 29-invariant v0.1.0 reference. Public tag CI separately runs
+the exact integration on Windows and Ubuntu, plus distribution and Python
+3.11-3.13 quality jobs. The lightweight tag resolves to
+[`84b3a53203a5fe4e0d4a78fb479237e5dfbd1d6e`](https://github.com/tiramitree/cache-invariant/commit/84b3a53203a5fe4e0d4a78fb479237e5dfbd1d6e).
 
 The release contains only the wheel and source distribution; it does not
 redistribute the runtime, source fixture, or converted model. These controlled
 observations do not establish model quality, useful generated text, latency,
-throughput, security, production behavior, cross-runtime equivalence,
+throughput, scheduling fairness, simultaneous token generation, survivor
+liveness, security, production isolation, cross-runtime equivalence,
 independent reproduction, external review, or adoption.
 
 ## BenchHandoff
