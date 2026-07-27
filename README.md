@@ -62,8 +62,8 @@ use, or adoption.
 ## CacheInvariant
 
 [Repository](https://github.com/tiramitree/cache-invariant) |
-[v0.2.0 pre-release](https://github.com/tiramitree/cache-invariant/releases/tag/v0.2.0) |
-[public tag CI](https://github.com/tiramitree/cache-invariant/actions/runs/30287383452)
+[v0.3.0 pre-release](https://github.com/tiramitree/cache-invariant/releases/tag/v0.3.0) |
+[public tag CI](https://github.com/tiramitree/cache-invariant/actions/runs/30293833809)
 
 CacheInvariant is an Apache-2.0 lab for version-pinned inference-cache
 correctness and bounded slot-isolation protocols. It exercises the exact
@@ -72,18 +72,26 @@ registration, prompt work, cancellation/reuse, state save/restore, a full
 local process restart, and both registered orders of a two-stream cancellation
 and reuse protocol.
 
-The committed v0.2.0 Windows reference records 57/57 registered engineering
+Version `v0.3.0` adds a direct integer-token lane for exact replay, a
+three-token shared prefix, and first-token divergence. Every request is capped
+at one predicted token and generated content is discarded. Within the pinned
+fixture, the exact-replay and shared-prefix cases each report three cached
+source tokens with reuse enabled, while first-token divergence and all paired
+reuse-disabled controls report zero.
+
+The committed Windows schema-v3 reference records 77/77 registered engineering
 invariants as true and passes the bundled offline verifier, which also retains
-support for the 29-invariant v0.1.0 reference. Public tag CI separately runs
-the exact integration on Windows and Ubuntu, plus distribution and Python
-3.11-3.13 quality jobs. The lightweight tag resolves to
-[`84b3a53203a5fe4e0d4a78fb479237e5dfbd1d6e`](https://github.com/tiramitree/cache-invariant/commit/84b3a53203a5fe4e0d4a78fb479237e5dfbd1d6e).
+support for the 57-invariant v0.2.0 and 29-invariant v0.1.0 references. Public
+tag CI passed all nine jobs and separately runs the exact integration on
+Windows and Ubuntu, plus distribution and Python 3.11-3.13 quality jobs. The
+lightweight tag resolves to
+[`203f84a42bb7fb841abd3c1f5d221b0bed6de289`](https://github.com/tiramitree/cache-invariant/commit/203f84a42bb7fb841abd3c1f5d221b0bed6de289).
 
 The release contains only the wheel and source distribution; it does not
 redistribute the runtime, source fixture, or converted model. These controlled
-observations do not establish model quality, useful generated text, latency,
-throughput, scheduling fairness, simultaneous token generation, survivor
-liveness, security, production isolation, cross-runtime equivalence,
+server-counter observations do not establish model quality, useful generated
+text, latency, throughput, scheduling fairness, simultaneous token generation,
+survivor liveness, security, production isolation, cross-runtime equivalence,
 independent reproduction, external review, or adoption.
 
 ## BenchHandoff
