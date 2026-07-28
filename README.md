@@ -1,9 +1,9 @@
 # tiramitree
 
 I build auditable AI systems and research-engineering infrastructure:
-agent-benchmark metric, provenance, and keyed-manifest auditing,
-agent/tool-effect evaluation, distributed-checkpoint restart invariants, and
-fail-closed recovery.
+agent-benchmark metric, manifest, provenance, and custom-agent boundary
+auditing; agent/tool-effect evaluation; distributed-checkpoint restart
+invariants; and fail-closed recovery.
 
 My three representative owned projects are EvalFence, EffectWitness, and
 DCPInvariant; BenchHandoff and CacheInvariant are additional bounded evidence.
@@ -13,7 +13,7 @@ use, and production validation are different kinds of evidence.
 
 ## Current focus
 
-- agent-benchmark metric, manifest-integrity, and reproducibility contracts
+- agent-benchmark metric, manifest-integrity, boundary, and reproducibility contracts
 - agent harnesses and tool-effect semantics under ambiguous failures
 - single-host distributed-checkpoint process-count restart invariants
 - experiment recovery and process-lifecycle invariants
@@ -23,26 +23,31 @@ use, and production validation are different kinds of evidence.
 ## EvalFence
 
 [Repository](https://github.com/tiramitree/evalfence) |
-[v0.2.0 source-only release](https://github.com/tiramitree/evalfence/releases/tag/v0.2.0) |
-[main CI](https://github.com/tiramitree/evalfence/actions/runs/30355886136) |
-[main SWE-bench control](https://github.com/tiramitree/evalfence/actions/runs/30355885891) |
-[tag CI](https://github.com/tiramitree/evalfence/actions/runs/30356013022) |
-[tag SWE-bench control](https://github.com/tiramitree/evalfence/actions/runs/30356011144)
+[v0.3.0 source-only release](https://github.com/tiramitree/evalfence/releases/tag/v0.3.0) |
+[main CI](https://github.com/tiramitree/evalfence/actions/runs/30401556015) |
+[main SWE-bench control](https://github.com/tiramitree/evalfence/actions/runs/30401556000) |
+[main STATE-Bench control](https://github.com/tiramitree/evalfence/actions/runs/30401556102) |
+[tag CI](https://github.com/tiramitree/evalfence/actions/runs/30401692397) |
+[tag SWE-bench control](https://github.com/tiramitree/evalfence/actions/runs/30401692383) |
+[tag STATE-Bench control](https://github.com/tiramitree/evalfence/actions/runs/30401692378)
 
-EvalFence is an Apache-2.0 Rust CLI with two independent fail-closed contracts
-for agent-benchmark evidence. The interval and metric lane checks explicit
-prediction and gold declarations, prediction-source allowlists, interval and
-count consistency, and supplied precision, recall, and F1 formulas. The
-keyed-manifest lane checks exact IDs and payload-digest syntax, duplicate and
-conflicting records, allowlisted and required coverage, declared counts, and
-order-dependent last-write-wins collapse before records become a map.
+EvalFence is an Apache-2.0 Rust CLI with three independent fail-closed
+contracts for agent-benchmark evidence. The interval/metric lane checks
+explicit prediction and gold declarations, prediction-source allowlists,
+interval and count consistency, and supplied precision, recall, and F1
+formulas. The keyed-manifest lane checks exact IDs and payload-digest syntax,
+duplicate and conflicting records, coverage, declared counts, and
+order-dependent last-write-wins collapse before records become a map. The
+custom-agent boundary lane checks declared input classes and allowlists,
+mutable aliases, exposed read/write capability groups, callable and mediated
+counts, and custom-agent construction versus baseline-snapshot order.
 
-The annotated v0.2.0 tag resolves to
-[`ebb91ec8eaf5e0c7a494e36491cf20985bb551aa`](https://github.com/tiramitree/evalfence/commit/ebb91ec8eaf5e0c7a494e36491cf20985bb551aa).
-At that commit, main and tag validation each passed five public jobs across the
-CI and SWE-bench-control workflows: Rust formatting and Clippy, Linux,
-Windows, and macOS tests, a release build, both source-bound case studies, and
-generated-evidence privacy gates. The Release has no attached binaries or
+The annotated v0.3.0 tag resolves to
+[`de3c49e6a6960fbafea59381a69439558a239e0e`](https://github.com/tiramitree/evalfence/commit/de3c49e6a6960fbafea59381a69439558a239e0e).
+At that commit, main and tag validation each passed six public jobs across the
+CI and two independent control workflows: Rust formatting and Clippy, Linux,
+Windows, and macOS tests, a release build, all three source-bound case studies,
+and generated-evidence privacy gates. The Release has no attached binaries or
 other uploaded assets and contains only GitHub-generated source archives.
 
 The ContextBench control remains hash-pinned to one exact upstream revision.
@@ -60,13 +65,26 @@ Generated findings and witnesses use group ordinals instead of serializing
 manifest record or policy IDs; caller-controlled `case_id` is still copied to
 the report and requires its own privacy review.
 
-EvalFence validates declared adapter inputs and frozen source relationships,
-not arbitrary upstream data flow or adapter-selected payload bytes. The
-controls do not establish that a real prediction file contains duplicates,
-that a published score changed, or that either upstream is defective or
-nonconforming. They are not model- or harness-quality benchmarks, sandboxes,
-production validation, independent review, external use, adoption,
-endorsement, or recruiting signals.
+The STATE-Bench control is pinned to
+[`4efcbf2d4fe60df04878859b692d9391f3d5b33a`](https://github.com/microsoft/STATE-Bench/commit/4efcbf2d4fe60df04878859b692d9391f3d5b33a).
+Exact source and AST guards plus an offline runtime probe cover one public test
+task in each registered domain. The declared custom-agent boundary receives 14
+state-requirement items, nine task-requirement items, and 20 callable write
+handlers. A bounded shopping control reaches deterministic state score `1`
+with two harness-executed tool calls; removing only `state_requirements`
+produces score `0`, no calls or errors, and an empty state diff. This is not a
+protocol-compliant or official score.
+
+EvalFence validates declared adapter inputs and frozen source/runtime
+relationships, not arbitrary upstream data flow or physical isolation. Input
+and oracle classes remain adapter declarations. These controls do not establish
+that a submitted agent used the declared fields or callables, that a real
+prediction file contains duplicates, that a published score changed, or that
+an upstream is defective or nonconforming. Removing one context field does not
+isolate arbitrary same-process Python; filesystem access, task-ID lookup, and
+other same-process hooks remain outside the control. The project is not a
+model- or harness-quality benchmark, sandbox, production validation,
+independent review, external use, adoption, endorsement, or recruiting signal.
 
 ## DCPInvariant
 
