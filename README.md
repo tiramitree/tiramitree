@@ -1,23 +1,54 @@
 # tiramitree
 
 I build auditable AI systems and research-engineering infrastructure:
-agent/tool effect evaluation, distributed-checkpoint restart invariants,
-failure recovery, and reproducible control planes.
+agent-benchmark metric and provenance auditing, agent/tool-effect evaluation,
+distributed-checkpoint restart invariants, and fail-closed recovery.
 
-My three representative owned projects are DCPInvariant, EffectWitness, and
-BenchHandoff; CacheInvariant is an additional bounded inference experiment.
-Claims are tied to source revisions, public CI, release assets, or committed
-normalized evidence. Local tests, public CI, independent reproduction,
-external use, and production validation are different kinds of evidence.
+My three representative owned projects are EvalFence, EffectWitness, and
+DCPInvariant; BenchHandoff and CacheInvariant are additional bounded evidence.
+Claims are tied to source revisions, public CI, releases, or committed
+normalized evidence. Maintainer-operated tests, independent review, external
+use, and production validation are different kinds of evidence.
 
 ## Current focus
 
+- agent-benchmark metric, provenance, and reproducibility contracts
 - agent harnesses and tool-effect semantics under ambiguous failures
 - single-host distributed-checkpoint process-count restart invariants
 - experiment recovery and process-lifecycle invariants
 - version-pinned inference-cache correctness
-- fail-closed recovery, provenance, and evidence integrity
-- Python, Windows/Linux CI, fault injection, and systems-oriented testing
+- Rust and Python, cross-platform CI, fault injection, and systems testing
+
+## EvalFence
+
+[Repository](https://github.com/tiramitree/evalfence) |
+[v0.1.0 source-only release](https://github.com/tiramitree/evalfence/releases/tag/v0.1.0) |
+[main CI](https://github.com/tiramitree/evalfence/actions/runs/30348232629) |
+[tag CI](https://github.com/tiramitree/evalfence/actions/runs/30348374895)
+
+EvalFence is an Apache-2.0 Rust CLI for auditing adapter-declared metric and
+evidence-provenance contracts in agent benchmarks. It checks explicit
+prediction and gold declarations, prediction-source allowlists, interval and
+count consistency, and supplied precision, recall, and F1 formulas.
+
+The annotated v0.1.0 tag resolves to
+[`50e221bb011f8ad69b2ed820958a9d4def2b36e0`](https://github.com/tiramitree/evalfence/commit/50e221bb011f8ad69b2ed820958a9d4def2b36e0).
+At that commit, main and tag CI each passed four jobs covering Rust quality,
+Windows, macOS, and the pinned ContextBench case study. The Release has no
+attached binaries or other assets and contains only GitHub-generated source
+archives.
+
+The hash-pinned case study simulates an absent-`model_patch` path over 500
+public rows. It materializes 421 nonempty fallback cases; 410 have a
+per-instance recall field that differs from standard set recall, including 380
+whose record field is `1.0` while standard recall is below `1.0`. The separate
+upstream aggregation path recomputes standard micro metrics.
+
+EvalFence validates declared adapter inputs, not arbitrary upstream data flow.
+The case study does not establish that a real submission omitted
+`model_patch`, that aggregate or leaderboard results were affected, or that
+the project has independent review, external users, adoption, endorsement, or
+production use.
 
 ## DCPInvariant
 
@@ -115,7 +146,7 @@ bounded server counters, not model-quality, generated-output, performance,
 production, cross-runtime, independent-review, external-use, or adoption
 evidence.
 
-## BenchHandoff
+## Additional bounded evidence: BenchHandoff
 
 [Repository](https://github.com/tiramitree/benchhandoff) |
 [v0.3.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.3.0) |
