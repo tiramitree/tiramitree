@@ -54,8 +54,8 @@ or adoption claims.
 ## EffectWitness
 
 [Repository](https://github.com/tiramitree/effect-witness) |
-[v0.3.3 pre-release](https://github.com/tiramitree/effect-witness/releases/tag/v0.3.3) |
-[public tag CI](https://github.com/tiramitree/effect-witness/actions/runs/30277977090)
+[v0.4.0 pre-release](https://github.com/tiramitree/effect-witness/releases/tag/v0.4.0) |
+[public tag CI](https://github.com/tiramitree/effect-witness/actions/runs/30320989049)
 
 EffectWitness is an Apache-2.0 workbench for comparing declared MCP tool
 effect hints, client observations, and durable effects under ambiguous
@@ -63,25 +63,25 @@ failures. It records declaration, observation, decision, and effect facts
 separately instead of treating a successful-looking response as proof of an
 external effect.
 
-Version `v0.3.3` adds a LangGraph replay lane pinned to LangGraph 1.2.9,
-checkpoint 4.1.1, SQLite checkpoint 3.1.0, sqlite-vec 0.1.9, MCP 1.28.1,
-Node 24.18.0, and the official MCP filesystem server 2026.7.10. Four
-registered scenarios run for ten rounds each across separate fault and resume
-processes. The normalized artifact records 80 worker process facts and 60
-mutating-call observations while excluding checkpoint databases, raw tool
-arguments and responses, paths, environment values, process identifiers, and
-timestamps. No model API or paid service is used.
+Version `v0.4.0` adds a separate schema-v5 lane using mini-swe-agent 2.4.6
+against one fixed synthetic Git patch. Four registered scenarios run for three
+rounds each: clean execution, an application-level first trajectory-save
+fault followed by blind restart, journal-based reconciliation, and a tampered
+reconciliation control that must fail closed. The evidence binds registered
+pre/post byte-tree hashes, the patch, command result, journal transitions, and
+the durable effect without publishing raw trajectories, workspaces, commands,
+paths, environment values, process identifiers, or timestamps.
 
-The same release retains the exact version-pinned stdio lane for five
-registered official-filesystem inputs and the synthetic schema-v2 controls
-for false effect hints, ambiguous transport outcomes, reconciliation, and
-eight-call concurrency. Producers fail closed instead of sealing a partial
-artifact when any registered expectation is missed. Public tag CI passed all
-11 jobs and separately generated and verified fresh Windows and Ubuntu
-filesystem and LangGraph observations.
+The bundled Windows reference contains eight files, 21 completed worker
+records, and 15 registered command executions. An independent offline verifier
+recomputes the schema-v5 relationships without importing or running
+mini-swe-agent. The release retains the exact version-pinned official
+filesystem, synthetic schema-v2, and LangGraph replay lanes. Public main and
+tag CI each passed all 13 jobs across Windows, Ubuntu, and Python 3.11-3.13.
+No model API or paid service is used.
 
 The lightweight tag resolves to
-[`2a1e23df7bd9d1627ea06419053261e49e375d95`](https://github.com/tiramitree/effect-witness/commit/2a1e23df7bd9d1627ea06419053261e49e375d95).
+[`a6ca1c447752df90f72e200eb4536a1976186d5a`](https://github.com/tiramitree/effect-witness/commit/a6ca1c447752df90f72e200eb4536a1976186d5a).
 The release contains only a wheel and source distribution. The wheel excludes
 `integrations/` metadata and Node/npm/runtime payloads; the source distribution
 adds only the exact manifests, locks, constraints, and provenance metadata
@@ -89,9 +89,11 @@ needed to prepare and verify external dependencies, not the dependencies or
 runtimes themselves.
 
 The observations are source-, version-, input-, and OS-bound. They do not
-establish exactly-once execution, arbitrary LangGraph or MCP correctness,
-package-wide correctness, official conformance, SQLite crash consistency,
-security, performance, production reliability, independent review, external
+establish native mini-swe-agent resume, hard-machine-crash recovery,
+exactly-once execution, arbitrary patch or command correctness, coding-agent
+or model quality, benchmark performance, sandboxing, arbitrary LangGraph or
+MCP correctness, package-wide correctness, official conformance, SQLite crash
+consistency, security, production reliability, independent review, external
 use, or adoption.
 
 ## Additional bounded evidence: CacheInvariant

@@ -71,35 +71,42 @@ performance, production validation, independent review, external use, or
 adoption evidence. No TestPyPI or PyPI package was published. The external
 evidence ledger, as of 2026-07-24, remains zero.
 
-## Owned repository: EffectWitness v0.3.3
+## Owned repository: EffectWitness v0.4.0
 
 - Repository:
   [tiramitree/effect-witness](https://github.com/tiramitree/effect-witness)
 - Pre-release:
-  [v0.3.3](https://github.com/tiramitree/effect-witness/releases/tag/v0.3.3)
+  [v0.4.0](https://github.com/tiramitree/effect-witness/releases/tag/v0.4.0)
 - Current main and lightweight tag:
-  `2a1e23df7bd9d1627ea06419053261e49e375d95`
+  `a6ca1c447752df90f72e200eb4536a1976186d5a`
 - Main CI:
-  [run 30277401297](https://github.com/tiramitree/effect-witness/actions/runs/30277401297)
+  [run 30320658101](https://github.com/tiramitree/effect-witness/actions/runs/30320658101)
 - Tag CI:
-  [run 30277977090](https://github.com/tiramitree/effect-witness/actions/runs/30277977090)
+  [run 30320989049](https://github.com/tiramitree/effect-witness/actions/runs/30320989049)
 - Current status: Apache-2.0, public pre-alpha GitHub pre-release
 
 EffectWitness compares declared MCP tool-effect hints, client observations,
-and durable effects under ambiguous failures. Version 0.3.3 includes an exact
-version-pinned official-filesystem lane, synthetic schema-v2 controls, and a
-LangGraph replay lane spanning separate fault and resume processes.
+and durable effects under ambiguous failures. Version 0.4.0 adds a separate
+schema-v5 mini-swe-agent 2.4.6 lane for one fixed synthetic Git patch. Its four
+registered scenarios cover clean execution, blind restart after an
+application-level first trajectory-save fault, journal-based reconciliation,
+and a tampered reconciliation control that must fail closed.
 
-The schema-v4 replay reference contains four scenarios, 40 rounds, 80 worker
-facts, and 60 mutating-call observations. Main and tag CI each passed all 11
-jobs. Both public assets matched GitHub server digests, and the bundled
-schema-v2 and schema-v4 references passed offline verification.
+The schema-v5 Windows reference contains four scenarios across three rounds,
+eight files, 21 completed worker records, and 15 registered command
+executions. An independent offline verifier recomputes its relationships
+without importing or running mini-swe-agent. The earlier official-filesystem,
+schema-v2, and LangGraph replay evidence remains available. Main and tag CI
+each passed all 13 jobs. Both public assets matched GitHub server digests, and
+the bundled references passed their offline verifiers.
 
-This is controlled loopback, local-filesystem, and exact-version replay
-evidence. It is not arbitrary-tool exactly-once behavior, arbitrary LangGraph
-or MCP correctness, official conformance, production or distributed
-correctness, security, performance, independent review, external use,
-adoption, or recruiting evidence. No PyPI package was published.
+This is controlled loopback, local-filesystem, synthetic-patch, and
+exact-version evidence. It is not native mini-swe-agent resume, hard-crash
+recovery, arbitrary-command exactly-once behavior, a coding-agent or model
+benchmark, a sandbox, arbitrary LangGraph or MCP correctness, official
+conformance, production or distributed correctness, security, performance,
+independent review, external use, adoption, or recruiting evidence. No model
+API or paid service was used, and no PyPI package was published.
 
 ## Owned repository: CacheInvariant v0.3.0
 
