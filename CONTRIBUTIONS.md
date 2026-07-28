@@ -13,42 +13,41 @@ The current portfolio emphasis is work in repositories owned by
 records; this page does not imply a plan to open new upstream pull requests,
 issues, or discussions.
 
-## Owned repository: DCPInvariant v0.2.0
+## Owned repository: DCPInvariant v0.3.0
 
 - Repository:
   [tiramitree/dcp-invariant](https://github.com/tiramitree/dcp-invariant)
 - Release:
-  [v0.2.0](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.2.0)
+  [v0.3.0](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.3.0)
 - Current main and annotated tag target:
-  `75b9641fa20f0c28f13b6153b7441ac5f15ed8bc`
+  `c82a3d57719f2fcba8d39ec7e52d842e9e871f1b`
 - Public main CI:
-  [run 30371462187](https://github.com/tiramitree/dcp-invariant/actions/runs/30371462187)
+  [run 30390694413](https://github.com/tiramitree/dcp-invariant/actions/runs/30390694413)
 - Public tag CI:
-  [run 30371899609](https://github.com/tiramitree/dcp-invariant/actions/runs/30371899609)
+  [run 30391057534](https://github.com/tiramitree/dcp-invariant/actions/runs/30391057534)
 - Current status: Apache-2.0, GitHub-only pre-alpha release
 
-The schema-v2 evidence passes eleven fixed single-host CPU/Gloo scenarios:
+The schema-v3 evidence passes twelve fixed single-host CPU/Gloo scenarios:
 four DDP restart topologies, two DTensor global-tensor restore topologies, one
 fixed real two-worker `torch.distributed.run` restart, and expected rejection
 of a rank exit without promotion, missing metadata, missing shard, and
-one-byte shard corruption. The elastic case injects one registered rank-1
-exit, observes one restart, reloads the same committed generation, and checks
-model, optimizer, RNG, cursor, aggregate, receipt, pointer, and next-step
-state without a post-failure promotion.
+one-byte shard corruption. The added fixed asynchronous-snapshot witness uses
+two CPU/Gloo ranks, `torchvision.models.resnet18(weights=None)`, synthetic
+input, and public writer gates. Its loaded candidate matches the staged
+pre-mutation state, differs from the post-mutation state, and is then promoted
+through the same receipt-bound path.
 
-Six live-integration and six quality jobs passed across Windows and Ubuntu
-with CPython 3.11-3.13, plus one successful Ubuntu package-boundary job. The
-wheel, source distribution, and evidence archive matched `SHA256SUMS`; all
-four assets matched GitHub server digest metadata, authenticated redownloads,
-and public-download hashes. The installed wheel also verified the normalized
-evidence offline without PyTorch or NumPy present. The v0.2 verifier accepts
-the 26-file v2 inventory only; the preserved v0.1.0 verifier remains the v1
-verifier. The retained failed feature run records the CPU-wheel distribution
-metadata mismatch fixed before the branch, main, and tag runs passed.
+Candidate, main, and annotated-tag CI each passed all 13 jobs across Windows,
+Ubuntu, and CPython 3.11-3.13. The wheel, source distribution, and evidence
+archive matched `SHA256SUMS`; all four assets matched GitHub server digest
+metadata and public-download hashes. The installed wheel also verified the
+28-file evidence offline without PyTorch, torchvision, Pillow, or NumPy
+present. The preserved v0.1.0 and v0.2.0 releases remain the verifiers for
+their historical schemas and evidence inventories.
 
 This is fixture-, source-, version-, and topology-bound evidence. It is not a
 general TorchElastic or membership result, or a multi-node, GPU/NCCL, FSDP,
-arbitrary-model, performance, production, hostile-checkpoint,
+arbitrary-model snapshot-semantics, performance, production, hostile-checkpoint,
 independent-review, external-use, adoption, or recruiting claim.
 
 ## Owned repository: BenchHandoff v0.2.0
