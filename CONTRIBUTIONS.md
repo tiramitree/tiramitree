@@ -13,6 +13,37 @@ The current portfolio emphasis is work in repositories owned by
 records; this page does not imply a plan to open new upstream pull requests,
 issues, or discussions.
 
+## Owned repository: DCPInvariant v0.1.0
+
+- Repository:
+  [tiramitree/dcp-invariant](https://github.com/tiramitree/dcp-invariant)
+- Release:
+  [v0.1.0](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.1.0)
+- Current main and lightweight tag:
+  `cad6b94ffe45e5a6821dba6b7a15920d3a40f283`
+- Public CI:
+  [run 30314935055](https://github.com/tiramitree/dcp-invariant/actions/runs/30314935055)
+- Current status: Apache-2.0, GitHub-only pre-alpha release
+
+The normalized evidence passes ten fixed single-host CPU/Gloo scenarios:
+four DDP restart topologies, two DTensor global-tensor restore topologies, and
+expected rejection of a child exit, missing metadata, missing shard, and
+one-byte shard corruption. It binds model parameters, SGD momentum, explicit
+generator state, and a data cursor at the checkpoint and after the next
+registered training step.
+
+Six live-integration and six quality jobs passed across Windows and Ubuntu
+with CPython 3.11-3.13, plus one successful Ubuntu package-boundary job. The
+wheel, source distribution, and evidence archive matched `SHA256SUMS`; all
+four assets matched GitHub server digest metadata and their fresh-download
+hashes. The installed wheel also verified the normalized evidence offline
+without PyTorch or NumPy present.
+
+This is fixture-, source-, version-, and topology-bound evidence. It is not a
+multi-node, GPU/NCCL, FSDP, arbitrary-model, performance, production,
+hostile-checkpoint, independent-review, external-use, adoption, or recruiting
+claim.
+
 ## Owned repository: BenchHandoff v0.2.0
 
 - Repository: [tiramitree/benchhandoff](https://github.com/tiramitree/benchhandoff)
@@ -40,37 +71,61 @@ performance, production validation, independent review, external use, or
 adoption evidence. No TestPyPI or PyPI package was published. The external
 evidence ledger, as of 2026-07-24, remains zero.
 
-## Owned repository: EffectWitness v0.1.0
+## Owned repository: EffectWitness v0.3.3
 
 - Repository:
   [tiramitree/effect-witness](https://github.com/tiramitree/effect-witness)
 - Pre-release:
-  [v0.1.0](https://github.com/tiramitree/effect-witness/releases/tag/v0.1.0)
-- Evidence source: `f4575f88cf6a17f6c32bd2c7462063142d37c56a`
+  [v0.3.3](https://github.com/tiramitree/effect-witness/releases/tag/v0.3.3)
 - Current main and lightweight tag:
-  `72474eae59931cfe0be6501cd340d07c34a100ca`
+  `2a1e23df7bd9d1627ea06419053261e49e375d95`
 - Main CI:
-  [run 30216628502](https://github.com/tiramitree/effect-witness/actions/runs/30216628502)
+  [run 30277401297](https://github.com/tiramitree/effect-witness/actions/runs/30277401297)
 - Tag CI:
-  [run 30216628917](https://github.com/tiramitree/effect-witness/actions/runs/30216628917)
+  [run 30277977090](https://github.com/tiramitree/effect-witness/actions/runs/30277977090)
 - Current status: Apache-2.0, public pre-alpha GitHub pre-release
 
-EffectWitness compares declared MCP tool-effect hints, client observations, and
-durable synthetic SQLite effect facts under ten registered loopback scenarios.
-The matrix contains 3 `MATCH`, 4 `MISMATCH`, and 3 `NOT_APPLICABLE`
-declared-contract classifications. Main and tag CI each passed all seven jobs,
-including Ubuntu and Windows tests for Python 3.11-3.13.
+EffectWitness compares declared MCP tool-effect hints, client observations,
+and durable effects under ambiguous failures. Version 0.3.3 includes an exact
+version-pinned official-filesystem lane, synthetic schema-v2 controls, and a
+LangGraph replay lane spanning separate fault and resume processes.
 
-All five public assets passed GitHub digest and fresh-download checksum checks.
-The source-bound reference ZIP also passed the bundled schema-v2 offline
-verifier. An intermediate history commit can check out its generated JUnit file
-with normalized line endings; the current main/tag revision fixes that and is
-the only verified release state.
+The schema-v4 replay reference contains four scenarios, 40 rounds, 80 worker
+facts, and 60 mutating-call observations. Main and tag CI each passed all 11
+jobs. Both public assets matched GitHub server digests, and the bundled
+schema-v2 and schema-v4 references passed offline verification.
 
-This is controlled synthetic loopback evidence, not a success rate, model
-score, arbitrary-tool exactly-once guarantee, official MCP conformance,
-production or distributed correctness, security result, independent review,
-external use, adoption, or recruiting signal. No PyPI package was published.
+This is controlled loopback, local-filesystem, and exact-version replay
+evidence. It is not arbitrary-tool exactly-once behavior, arbitrary LangGraph
+or MCP correctness, official conformance, production or distributed
+correctness, security, performance, independent review, external use,
+adoption, or recruiting evidence. No PyPI package was published.
+
+## Owned repository: CacheInvariant v0.3.0
+
+- Repository:
+  [tiramitree/cache-invariant](https://github.com/tiramitree/cache-invariant)
+- Pre-release:
+  [v0.3.0](https://github.com/tiramitree/cache-invariant/releases/tag/v0.3.0)
+- Current main and lightweight tag:
+  `203f84a42bb7fb841abd3c1f5d221b0bed6de289`
+- Main CI:
+  [run 30293701488](https://github.com/tiramitree/cache-invariant/actions/runs/30293701488)
+- Tag CI:
+  [run 30293833809](https://github.com/tiramitree/cache-invariant/actions/runs/30293833809)
+- Current status: Apache-2.0 original code with separately attributed MIT
+  converter; public pre-alpha GitHub pre-release
+
+The schema-v3 reference records 77/77 registered invariants for the exact
+`llama.cpp b10107` CPU fixture. It covers direct-token exact replay, a
+three-token shared prefix, first-token divergence controls, state restart, and
+both registered orders of a two-stream cancellation and reuse protocol. Main
+and tag CI each passed all nine jobs on Windows and Ubuntu.
+
+This is exact-version, owner-operated cache-counter evidence. It is not model
+quality, generated-output equivalence, performance, production, cross-version
+or cross-runtime correctness, independent review, external use, adoption, or
+recruiting evidence. The runtime and model fixture are not redistributed.
 
 ## Personal fork: Genie Sim resumable benchmark batch
 

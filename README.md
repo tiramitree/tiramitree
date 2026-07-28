@@ -1,20 +1,55 @@
 # tiramitree
 
 I build auditable AI systems and research-engineering infrastructure:
-agent/tool effect evaluation, failure recovery, version-pinned inference
-experiments, and reproducible control planes.
+agent/tool effect evaluation, distributed-checkpoint restart invariants,
+failure recovery, and reproducible control planes.
 
-My public work is organized around a small number of owned projects. Claims
-are tied to source revisions, public CI, release assets, or committed
+My three representative owned projects are DCPInvariant, EffectWitness, and
+BenchHandoff; CacheInvariant is an additional bounded inference experiment.
+Claims are tied to source revisions, public CI, release assets, or committed
 normalized evidence. Local tests, public CI, independent reproduction,
 external use, and production validation are different kinds of evidence.
 
 ## Current focus
 
 - agent harnesses and tool-effect semantics under ambiguous failures
-- inference-cache correctness and process-lifecycle invariants
+- single-host distributed-checkpoint process-count restart invariants
+- experiment recovery and process-lifecycle invariants
+- version-pinned inference-cache correctness
 - fail-closed recovery, provenance, and evidence integrity
 - Python, Windows/Linux CI, fault injection, and systems-oriented testing
+
+## DCPInvariant
+
+[Repository](https://github.com/tiramitree/dcp-invariant) |
+[v0.1.0 release](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.1.0) |
+[public CI](https://github.com/tiramitree/dcp-invariant/actions/runs/30314935055)
+
+DCPInvariant is an Apache-2.0, CPU-only evidence harness for exact restart
+invariants around PyTorch Distributed Checkpoint. Its fixed fixture checks
+model parameters, SGD momentum, an explicit generator state, and a data cursor
+at the checkpoint and after the next registered training step.
+
+The normalized v0.1.0 evidence passes ten single-host CPU/Gloo scenarios:
+DDP restart at 1-to-1, 1-to-2, 2-to-1, and 2-to-2 processes; DTensor
+global-tensor restore at 1-to-2 and 2-to-1 processes; and expected rejection
+of a child exit, missing metadata, missing shard, and one-byte shard
+corruption. Checkpoints are sealed by ordinary-file inventories and SHA-256
+receipts, promoted under the receipt digest, and reverified after load.
+
+The lightweight tag resolves to
+[`cad6b94ffe45e5a6821dba6b7a15920d3a40f283`](https://github.com/tiramitree/dcp-invariant/commit/cad6b94ffe45e5a6821dba6b7a15920d3a40f283).
+Six live-integration and six quality jobs passed across Windows and Ubuntu
+with CPython 3.11-3.13, and the Ubuntu package-boundary job also passed. The
+Release contains a wheel, source distribution, normalized evidence archive,
+and checksum file. The wheel can verify the evidence offline without PyTorch
+or NumPy installed; the evidence archive contains no native checkpoint
+payload.
+
+These results are fixture-, version-, topology-, and source-bound. They do not
+establish multi-node, GPU/NCCL, FSDP, arbitrary-model, performance,
+production-reliability, hostile-checkpoint, independent-review, external-use,
+or adoption claims.
 
 ## EffectWitness
 
@@ -59,41 +94,24 @@ package-wide correctness, official conformance, SQLite crash consistency,
 security, performance, production reliability, independent review, external
 use, or adoption.
 
-## CacheInvariant
+## Additional bounded evidence: CacheInvariant
 
 [Repository](https://github.com/tiramitree/cache-invariant) |
 [v0.3.0 pre-release](https://github.com/tiramitree/cache-invariant/releases/tag/v0.3.0) |
 [public main CI](https://github.com/tiramitree/cache-invariant/actions/runs/30293701488) |
 [public tag CI](https://github.com/tiramitree/cache-invariant/actions/runs/30293833809)
 
-CacheInvariant is an Apache-2.0 lab for version-pinned inference-cache
-correctness and bounded slot-isolation protocols. It exercises the exact
-`llama.cpp b10107` CPU runtime with a tiny pinned fixture and records request
-registration, prompt work, cancellation/reuse, state save/restore, a full
-local process restart, and both registered orders of a two-stream cancellation
-and reuse protocol.
+CacheInvariant is an Apache-2.0 lab for exact-version inference-cache
+correctness. Its v0.3.0 reference records 77/77 registered invariants for a
+pinned `llama.cpp b10107` CPU fixture, including direct-token exact replay,
+shared-prefix reuse, first-token divergence controls, restart, cancellation,
+and reuse. Public main and tag CI each passed all nine jobs on Windows and
+Ubuntu.
 
-Version `v0.3.0` adds a direct integer-token lane for exact replay, a
-three-token shared prefix, and first-token divergence. Every request is capped
-at one predicted token and generated content is discarded. Within the pinned
-fixture, the exact-replay and shared-prefix cases each report three cached
-source tokens with reuse enabled, while first-token divergence and all paired
-reuse-disabled controls report zero.
-
-The committed Windows schema-v3 reference records 77/77 registered engineering
-invariants as true and passes the bundled offline verifier, which also retains
-support for the 57-invariant v0.2.0 and 29-invariant v0.1.0 references. Public
-main and tag CI each passed all nine jobs and separately run the exact
-integration on Windows and Ubuntu, plus distribution and Python 3.11-3.13
-quality jobs. The lightweight tag resolves to
-[`203f84a42bb7fb841abd3c1f5d221b0bed6de289`](https://github.com/tiramitree/cache-invariant/commit/203f84a42bb7fb841abd3c1f5d221b0bed6de289).
-
-The release contains only the wheel and source distribution; it does not
-redistribute the runtime, source fixture, or converted model. These controlled
-server-counter observations do not establish model quality, useful generated
-text, latency, throughput, scheduling fairness, simultaneous token generation,
-survivor liveness, security, production isolation, cross-runtime equivalence,
-independent reproduction, external review, or adoption.
+The runtime and model fixture are not redistributed. The observations are
+bounded server counters, not model-quality, generated-output, performance,
+production, cross-runtime, independent-review, external-use, or adoption
+evidence.
 
 ## BenchHandoff
 
