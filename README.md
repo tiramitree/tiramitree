@@ -1,8 +1,9 @@
 # tiramitree
 
 I build auditable AI systems and research-engineering infrastructure:
-agent-benchmark metric and provenance auditing, agent/tool-effect evaluation,
-distributed-checkpoint restart invariants, and fail-closed recovery.
+agent-benchmark metric, provenance, and keyed-manifest auditing,
+agent/tool-effect evaluation, distributed-checkpoint restart invariants, and
+fail-closed recovery.
 
 My three representative owned projects are EvalFence, EffectWitness, and
 DCPInvariant; BenchHandoff and CacheInvariant are additional bounded evidence.
@@ -12,7 +13,7 @@ use, and production validation are different kinds of evidence.
 
 ## Current focus
 
-- agent-benchmark metric, provenance, and reproducibility contracts
+- agent-benchmark metric, manifest-integrity, and reproducibility contracts
 - agent harnesses and tool-effect semantics under ambiguous failures
 - single-host distributed-checkpoint process-count restart invariants
 - experiment recovery and process-lifecycle invariants
@@ -22,33 +23,50 @@ use, and production validation are different kinds of evidence.
 ## EvalFence
 
 [Repository](https://github.com/tiramitree/evalfence) |
-[v0.1.0 source-only release](https://github.com/tiramitree/evalfence/releases/tag/v0.1.0) |
-[main CI](https://github.com/tiramitree/evalfence/actions/runs/30348232629) |
-[tag CI](https://github.com/tiramitree/evalfence/actions/runs/30348374895)
+[v0.2.0 source-only release](https://github.com/tiramitree/evalfence/releases/tag/v0.2.0) |
+[main CI](https://github.com/tiramitree/evalfence/actions/runs/30355886136) |
+[main SWE-bench control](https://github.com/tiramitree/evalfence/actions/runs/30355885891) |
+[tag CI](https://github.com/tiramitree/evalfence/actions/runs/30356013022) |
+[tag SWE-bench control](https://github.com/tiramitree/evalfence/actions/runs/30356011144)
 
-EvalFence is an Apache-2.0 Rust CLI for auditing adapter-declared metric and
-evidence-provenance contracts in agent benchmarks. It checks explicit
+EvalFence is an Apache-2.0 Rust CLI with two independent fail-closed contracts
+for agent-benchmark evidence. The interval and metric lane checks explicit
 prediction and gold declarations, prediction-source allowlists, interval and
-count consistency, and supplied precision, recall, and F1 formulas.
+count consistency, and supplied precision, recall, and F1 formulas. The
+keyed-manifest lane checks exact IDs and payload-digest syntax, duplicate and
+conflicting records, allowlisted and required coverage, declared counts, and
+order-dependent last-write-wins collapse before records become a map.
 
-The annotated v0.1.0 tag resolves to
-[`50e221bb011f8ad69b2ed820958a9d4def2b36e0`](https://github.com/tiramitree/evalfence/commit/50e221bb011f8ad69b2ed820958a9d4def2b36e0).
-At that commit, main and tag CI each passed four jobs covering Rust quality,
-Windows, macOS, and the pinned ContextBench case study. The Release has no
-attached binaries or other assets and contains only GitHub-generated source
-archives.
+The annotated v0.2.0 tag resolves to
+[`ebb91ec8eaf5e0c7a494e36491cf20985bb551aa`](https://github.com/tiramitree/evalfence/commit/ebb91ec8eaf5e0c7a494e36491cf20985bb551aa).
+At that commit, main and tag validation each passed five public jobs across the
+CI and SWE-bench-control workflows: Rust formatting and Clippy, Linux,
+Windows, and macOS tests, a release build, both source-bound case studies, and
+generated-evidence privacy gates. The Release has no attached binaries or
+other uploaded assets and contains only GitHub-generated source archives.
 
-The hash-pinned case study simulates an absent-`model_patch` path over 500
-public rows. It materializes 421 nonempty fallback cases; 410 have a
-per-instance recall field that differs from standard set recall, including 380
-whose record field is `1.0` while standard recall is below `1.0`. The separate
-upstream aggregation path recomputes standard micro metrics.
+The ContextBench control remains hash-pinned to one exact upstream revision.
+It simulates an absent-`model_patch` path over 500 public rows, materializes
+421 nonempty fallback cases, and records the bounded per-instance formula
+observations without claiming aggregate or leaderboard impact.
 
-EvalFence validates declared adapter inputs, not arbitrary upstream data flow.
-The case study does not establish that a real submission omitted
-`model_patch`, that aggregate or leaderboard results were affected, or that
-the project has independent review, external users, adoption, endorsement, or
-production use.
+The separate SWE-bench control is pinned to
+[`f7bbbb2ccdf479001d6467c9e34af59e44a840f9`](https://github.com/SWE-bench/SWE-bench/commit/f7bbbb2ccdf479001d6467c9e34af59e44a840f9).
+It verifies exact public file hashes, prediction-key constants, and registered
+loader and consumer AST shapes. Reversing two synthetic same-ID records with
+different payload digests changes the simulated last-write-wins survivor while
+retaining the registered duplicate, conflict, and order-dependence findings.
+Generated findings and witnesses use group ordinals instead of serializing
+manifest record or policy IDs; caller-controlled `case_id` is still copied to
+the report and requires its own privacy review.
+
+EvalFence validates declared adapter inputs and frozen source relationships,
+not arbitrary upstream data flow or adapter-selected payload bytes. The
+controls do not establish that a real prediction file contains duplicates,
+that a published score changed, or that either upstream is defective or
+nonconforming. They are not model- or harness-quality benchmarks, sandboxes,
+production validation, independent review, external use, adoption,
+endorsement, or recruiting signals.
 
 ## DCPInvariant
 
