@@ -118,8 +118,8 @@ evidence.
 ## BenchHandoff
 
 [Repository](https://github.com/tiramitree/benchhandoff) |
-[v0.2.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.2.0) |
-[release-build CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
+[v0.3.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.3.0) |
+[release-commit CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
 [tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml)
 
 BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
@@ -127,22 +127,28 @@ experiment batches. It fingerprints suites and declared inputs, preserves
 failed attempts, verifies completed outputs before skipping them, and binds an
 approved resume to the exact evidence reviewed before mutation.
 
-Version `v0.2.0` adds a byte-bound execution-context descriptor, resolved
-executable content and path identity, a minimal non-inheriting launch
-environment, Windows Job Object lifecycle control, and cooperative Linux
-session/process-group cleanup while retaining version 1 compatibility.
+Version `v0.3.0` adds opt-in suite schema v3 for one dedicated, reviewed
+workspace. It binds bounded directory topology and ordinary-file
+primary-stream bytes at preflight, launch, post-exit, recovery, bundle, and
+verification checkpoints; rejects linked, reparse, hard-linked, cross-device,
+aliased, unstable, and unsupported entries; and preserves version 1 and
+version 2 compatibility.
 
 The annotated tag resolves to
-[`c466ea30a58782e60dde0ee847977957641d8850`](https://github.com/tiramitree/benchhandoff/commit/c466ea30a58782e60dde0ee847977957641d8850).
-Both the release-build and tag runs passed all ten jobs. Each of the eight
-Ubuntu 24.04 and Windows Server 2025 jobs across CPython 3.11-3.14 ran 186
+[`e85c565a6600d92c1a929109d02d477682375b31`](https://github.com/tiramitree/benchhandoff/commit/e85c565a6600d92c1a929109d02d477682375b31).
+Both the release-commit and tag runs passed all ten jobs. Each of the eight
+Ubuntu 24.04 and Windows Server 2025 jobs across CPython 3.11-3.14 ran 211
 tests with no failures, errors, or skips; the dependent jobs verified the
-synthetic evidence and exact installed distribution.
+canonical synthetic evidence and built, inspected, installed, and smoke-tested
+the exact distribution.
 
-The eight Release assets were downloaded and matched byte-for-byte to the
-release-build artifacts. These are maintainer-operated synthetic checks, not
-a sandbox, hostile-code containment, remote attestation, production
-reliability, independent reproduction or review, external use, or adoption.
+The Release contains the exact CI-built wheel, source distribution, and
+checksum file. Workspace checks are discrete observations, not continuous
+monitoring, a sandbox, or a hostile-writer boundary; they do not bind mode,
+ownership, timestamps, ACLs, extended attributes, NTFS alternate data streams,
+sparse layout, or unlisted metadata. These are maintainer-operated synthetic
+checks, not production reliability, independent reproduction or review,
+external use, or adoption.
 
 ## Engineering principles
 
