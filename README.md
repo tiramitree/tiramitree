@@ -71,32 +71,40 @@ endorsement, or recruiting signals.
 ## DCPInvariant
 
 [Repository](https://github.com/tiramitree/dcp-invariant) |
-[v0.1.0 release](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.1.0) |
-[public CI](https://github.com/tiramitree/dcp-invariant/actions/runs/30314935055)
+[v0.2.0 release](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.2.0) |
+[public tag CI](https://github.com/tiramitree/dcp-invariant/actions/runs/30371899609)
 
 DCPInvariant is an Apache-2.0, CPU-only evidence harness for exact restart
 invariants around PyTorch Distributed Checkpoint. Its fixed fixture checks
 model parameters, SGD momentum, an explicit generator state, and a data cursor
 at the checkpoint and after the next registered training step.
 
-The normalized v0.1.0 evidence passes ten single-host CPU/Gloo scenarios:
-DDP restart at 1-to-1, 1-to-2, 2-to-1, and 2-to-2 processes; DTensor
-global-tensor restore at 1-to-2 and 2-to-1 processes; and expected rejection
-of a child exit, missing metadata, missing shard, and one-byte shard
-corruption. Checkpoints are sealed by ordinary-file inventories and SHA-256
-receipts, promoted under the receipt digest, and reverified after load.
+The normalized schema-v2 evidence passes eleven single-host CPU/Gloo
+scenarios: four DDP restart topologies, two DTensor global-tensor restore
+topologies, one fixed real two-worker `torch.distributed.run` restart, and
+expected rejection of a rank exit without promotion, missing metadata,
+missing shard, and one-byte shard corruption. The elastic case injects one
+registered rank-1 exit, observes exactly one restart, reloads the same
+committed generation, and compares model, optimizer, RNG, cursor, aggregate,
+receipt, pointer, and next-step state without a post-failure promotion.
 
-The lightweight tag resolves to
-[`cad6b94ffe45e5a6821dba6b7a15920d3a40f283`](https://github.com/tiramitree/dcp-invariant/commit/cad6b94ffe45e5a6821dba6b7a15920d3a40f283).
+The exact compatibility guard registers only two PyTorch distribution/runtime
+version pairs for one source digest. It does not infer an operating system or
+general TorchElastic compatibility. Schema v2 has 26 ordinary files and is
+not inventory-compatible with v1; the preserved v0.1.0 verifier remains the
+v1 verifier.
+
+The annotated tag targets
+[`75b9641fa20f0c28f13b6153b7441ac5f15ed8bc`](https://github.com/tiramitree/dcp-invariant/commit/75b9641fa20f0c28f13b6153b7441ac5f15ed8bc).
 Six live-integration and six quality jobs passed across Windows and Ubuntu
-with CPython 3.11-3.13, and the Ubuntu package-boundary job also passed. The
-Release contains a wheel, source distribution, normalized evidence archive,
-and checksum file. The wheel can verify the evidence offline without PyTorch
-or NumPy installed; the evidence archive contains no native checkpoint
-payload.
+with CPython 3.11-3.13, and the package-boundary job also passed. The Release
+contains a wheel, source distribution, normalized evidence archive, and
+checksum file; all four passed public-download hash parity. The wheel verifies
+the evidence offline without PyTorch or NumPy installed.
 
-These results are fixture-, version-, topology-, and source-bound. They do not
-establish multi-node, GPU/NCCL, FSDP, arbitrary-model, performance,
+These results are fixture-, version-, topology-, failure-point-, and
+source-bound. They do not establish arbitrary TorchElastic recovery, elastic
+membership, multi-node, GPU/NCCL, FSDP, arbitrary-model, performance,
 production-reliability, hostile-checkpoint, independent-review, external-use,
 or adoption claims.
 
