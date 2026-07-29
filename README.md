@@ -21,6 +21,53 @@ use, and production validation are different kinds of evidence.
 - Go, Rust, and Python; Kubernetes, cross-platform CI, fault injection, and
   systems testing
 
+## BenchHandoff
+
+[Repository](https://github.com/tiramitree/benchhandoff) |
+[v0.4.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.4.0) |
+[main CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
+[main AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml) |
+[tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
+[tag AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml)
+
+BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
+experiment batches. It fingerprints suites and declared inputs, preserves
+failed attempts, verifies completed outputs before skipping them, and binds an
+approved resume to the exact evidence reviewed before mutation.
+
+Version `v0.4.0` retains the strict suite schema v3 workspace contract and
+adds an optional early-alpha Kubernetes `AgentRun` controller. An immutable
+execution specification binds an existing PVC, normalized suite path and
+SHA-256, digest-pinned runner image, and bounded deadline.
+
+The controller creates one deterministic start, resume, or verify Job at a
+time. A failed start enters `AwaitingApproval`; only the exact write-once
+approval digest permits resume, followed by fresh bundle verification. It
+also binds the owner UID, execution-spec hash, Job template, live Job UID, and
+one owned Pod, and fails closed on registered digest, approval, ownership,
+template, Pod-cardinality, and result mismatches.
+
+The annotated tag resolves to
+[`c893f635076b57dfc830539ae5e17bb05b368813`](https://github.com/tiramitree/benchhandoff/commit/c893f635076b57dfc830539ae5e17bb05b368813).
+Main and annotated-tag CI each passed all ten jobs across Ubuntu 24.04 and
+Windows Server 2025 with CPython 3.11-3.14, canonical synthetic evidence, and
+one inspected and installed distribution build. Separate main and tag
+AgentRun workflows passed the pinned real-kind gate with Go 1.26.5, kind
+v0.32.0, and Kubernetes/kubectl v1.36.1 on one manager and one node.
+
+The registered gate covers deliberate failure, exact approval, resume, fresh
+verification, manager restart/adoption, declared suite-digest mismatch, wrong
+approval, duplicate-Pod rejection, and bounded cleanup. The Release contains
+only the CI-built Python wheel, source distribution, and checksum file. The Go
+manager, CRD, and reference manifests remain source-only; no controller image,
+Helm chart, production installer, or compatibility matrix is published.
+
+The reference E2E manifest uses a cluster-wide role and binding and requires
+deployment-specific review and narrowing. These owner-operated synthetic
+checks do not establish high availability, exactly-once execution, workload
+isolation, arbitrary Kubernetes compatibility, performance, production
+reliability, independent reproduction or review, external use, or adoption.
+
 ## EvalFence
 
 [Repository](https://github.com/tiramitree/evalfence) |
@@ -201,53 +248,6 @@ The runtime and model fixture are not redistributed. The observations are
 bounded server counters, not model-quality, generated-output, performance,
 production, cross-runtime, independent-review, external-use, or adoption
 evidence.
-
-## BenchHandoff
-
-[Repository](https://github.com/tiramitree/benchhandoff) |
-[v0.4.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.4.0) |
-[main CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
-[main AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml) |
-[tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
-[tag AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml)
-
-BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
-experiment batches. It fingerprints suites and declared inputs, preserves
-failed attempts, verifies completed outputs before skipping them, and binds an
-approved resume to the exact evidence reviewed before mutation.
-
-Version `v0.4.0` retains the strict suite schema v3 workspace contract and
-adds an optional early-alpha Kubernetes `AgentRun` controller. An immutable
-execution specification binds an existing PVC, normalized suite path and
-SHA-256, digest-pinned runner image, and bounded deadline.
-
-The controller creates one deterministic start, resume, or verify Job at a
-time. A failed start enters `AwaitingApproval`; only the exact write-once
-approval digest permits resume, followed by fresh bundle verification. It
-also binds the owner UID, execution-spec hash, Job template, live Job UID, and
-one owned Pod, and fails closed on registered digest, approval, ownership,
-template, Pod-cardinality, and result mismatches.
-
-The annotated tag resolves to
-[`c893f635076b57dfc830539ae5e17bb05b368813`](https://github.com/tiramitree/benchhandoff/commit/c893f635076b57dfc830539ae5e17bb05b368813).
-Main and annotated-tag CI each passed all ten jobs across Ubuntu 24.04 and
-Windows Server 2025 with CPython 3.11-3.14, canonical synthetic evidence, and
-one inspected and installed distribution build. Separate main and tag
-AgentRun workflows passed the pinned real-kind gate with Go 1.26.5, kind
-v0.32.0, and Kubernetes/kubectl v1.36.1 on one manager and one node.
-
-The registered gate covers deliberate failure, exact approval, resume, fresh
-verification, manager restart/adoption, declared suite-digest mismatch, wrong
-approval, duplicate-Pod rejection, and bounded cleanup. The Release contains
-only the CI-built Python wheel, source distribution, and checksum file. The Go
-manager, CRD, and reference manifests remain source-only; no controller image,
-Helm chart, production installer, or compatibility matrix is published.
-
-The reference E2E manifest uses a cluster-wide role and binding and requires
-deployment-specific review and narrowing. These owner-operated synthetic
-checks do not establish high availability, exactly-once execution, workload
-isolation, arbitrary Kubernetes compatibility, performance, production
-reliability, independent reproduction or review, external use, or adoption.
 
 ## Engineering principles
 
