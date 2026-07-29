@@ -24,21 +24,24 @@ use, and production validation are different kinds of evidence.
 ## BenchHandoff
 
 [Repository](https://github.com/tiramitree/benchhandoff) |
-[v0.4.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.4.0) |
-[main CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
-[main AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml) |
-[tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
-[tag AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml)
+[v0.5.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.5.0) |
+[main CI](https://github.com/tiramitree/benchhandoff/actions/runs/30472827326) |
+[main AgentRun real-kind E2E](https://github.com/tiramitree/benchhandoff/actions/runs/30472840631) |
+[tag CI](https://github.com/tiramitree/benchhandoff/actions/runs/30473618474) |
+[tag AgentRun real-kind E2E](https://github.com/tiramitree/benchhandoff/actions/runs/30473617993)
 
 BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
 experiment batches. It fingerprints suites and declared inputs, preserves
 failed attempts, verifies completed outputs before skipping them, and binds an
 approved resume to the exact evidence reviewed before mutation.
 
-Version `v0.4.0` retains the strict suite schema v3 workspace contract and
-adds an optional early-alpha Kubernetes `AgentRun` controller. An immutable
-execution specification binds an existing PVC, normalized suite path and
-SHA-256, digest-pinned runner image, and bounded deadline.
+Version `v0.5.0` retains the strict suite schema v3 workspace contract and the
+optional early-alpha Kubernetes `AgentRun` controller. An immutable execution
+specification binds an existing PVC, normalized suite path and SHA-256,
+digest-pinned runner image, and bounded deadline. The reference deployment
+runs exactly two manager replicas under client-go leader election against one
+pre-created namespaced Lease; a separate Role permits only `get` and `update`
+on that exact Lease.
 
 The controller creates one deterministic start, resume, or verify Job at a
 time. A failed start enters `AwaitingApproval`; only the exact write-once
@@ -48,25 +51,37 @@ one owned Pod, and fails closed on registered digest, approval, ownership,
 template, Pod-cardinality, and result mismatches.
 
 The annotated tag resolves to
-[`c893f635076b57dfc830539ae5e17bb05b368813`](https://github.com/tiramitree/benchhandoff/commit/c893f635076b57dfc830539ae5e17bb05b368813).
+[`c9837dc78ef199a52c23df101285c1e4d27c01e3`](https://github.com/tiramitree/benchhandoff/commit/c9837dc78ef199a52c23df101285c1e4d27c01e3).
 Main and annotated-tag CI each passed all ten jobs across Ubuntu 24.04 and
 Windows Server 2025 with CPython 3.11-3.14, canonical synthetic evidence, and
 one inspected and installed distribution build. Separate main and tag
 AgentRun workflows passed the pinned real-kind gate with Go 1.26.5, kind
-v0.32.0, and Kubernetes/kubectl v1.36.1 on one manager and one node.
+v0.32.0, and Kubernetes/kubectl v1.36.1 with two manager replicas on one
+single-node cluster.
 
-The registered gate covers deliberate failure, exact approval, resume, fresh
-verification, manager restart/adoption, declared suite-digest mismatch, wrong
-approval, duplicate-Pod rejection, and bounded cleanup. The Release contains
-only the CI-built Python wheel, source distribution, and checksum file. The Go
-manager, CRD, and reference manifests remain source-only; no controller image,
-Helm chart, production installer, or compatibility matrix is published.
+Deterministic fake-client tests separately cover Job-create success,
+`AlreadyExists`, committed-response loss, and status-conflict convergence.
+The real-kind gate covers one live-`start` takeover and one
+terminal-`resume`/pending-status takeover. It requires stable measured Job and
+Pod identities, the pre-existing passive manager acquiring exactly the next
+Lease transition without restarting, restored business RBAC, and exactly one
+final Job and Pod for each of `start`, `resume`, and `verify`.
+
+The Release has exactly five assets: the CI-built Python wheel, source
+distribution, distribution checksum, schema-2 takeover evidence record, and
+its distinct checksum. The Go manager, CRD, reference manifests, and kind gate
+remain source-only; no controller image, Helm chart, package-registry
+publication, production installer, or compatibility matrix is published.
 
 The reference E2E manifest uses a cluster-wide role and binding and requires
 deployment-specific review and narrowing. These owner-operated synthetic
-checks do not establish high availability, exactly-once execution, workload
-isolation, arbitrary Kubernetes compatibility, performance, production
-reliability, independent reproduction or review, external use, or adoption.
+checks use a fixed single-node cluster with the API server and storage
+available. They do not establish strict fencing, network-partition safety,
+arbitrary Pod recovery, multi-node or multi-cluster behavior, high
+availability, exactly-once execution, workload isolation, arbitrary
+Kubernetes compatibility, performance, production reliability, independent
+reproduction or review, external use, adoption, endorsement, or recruiting
+outcomes.
 
 ## EvalFence
 
