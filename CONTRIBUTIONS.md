@@ -1,6 +1,6 @@
 # Public engineering work log
 
-Last edited: 2026-07-28. Unchanged sections retain their recorded observation
+Last edited: 2026-07-29. Unchanged sections retain their recorded observation
 boundary and are not a current upstream-status refresh.
 
 This page is a status-aware record of public engineering work. A submitted
@@ -13,42 +13,47 @@ The current portfolio emphasis is work in repositories owned by
 records; this page does not imply a plan to open new upstream pull requests,
 issues, or discussions.
 
-## Owned repository: DCPInvariant v0.3.0
+## Owned repository: DCPInvariant v0.4.0
 
 - Repository:
   [tiramitree/dcp-invariant](https://github.com/tiramitree/dcp-invariant)
 - Release:
-  [v0.3.0](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.3.0)
+  [v0.4.0](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.4.0)
 - Current main and annotated tag target:
-  `c82a3d57719f2fcba8d39ec7e52d842e9e871f1b`
+  `7bb325704d196ebbfcbc5a9dd5fab0d5acd76fc4`
 - Public main CI:
-  [run 30390694413](https://github.com/tiramitree/dcp-invariant/actions/runs/30390694413)
+  [run 30430906014](https://github.com/tiramitree/dcp-invariant/actions/runs/30430906014)
 - Public tag CI:
-  [run 30391057534](https://github.com/tiramitree/dcp-invariant/actions/runs/30391057534)
+  [run 30431967133](https://github.com/tiramitree/dcp-invariant/actions/runs/30431967133)
 - Current status: Apache-2.0, GitHub-only pre-alpha release
 
-The schema-v3 evidence passes twelve fixed single-host CPU/Gloo scenarios:
+The schema-v4 evidence passes thirteen fixed single-host CPU/Gloo scenarios:
 four DDP restart topologies, two DTensor global-tensor restore topologies, one
-fixed real two-worker `torch.distributed.run` restart, and expected rejection
-of a rank exit without promotion, missing metadata, missing shard, and
-one-byte shard corruption. The added fixed asynchronous-snapshot witness uses
-two CPU/Gloo ranks, `torchvision.models.resnet18(weights=None)`, synthetic
-input, and public writer gates. Its loaded candidate matches the staged
-pre-mutation state, differs from the post-mutation state, and is then promoted
-through the same receipt-bound path.
+fixed real two-worker `torch.distributed.run` restart, one fixed two-rank
+ResNet18 asynchronous-snapshot witness, one deterministic two-publisher
+generation-lineage race, and four expected fault rejections.
+
+In the lineage scenario, two cooperating subprocesses commit distinct
+immutable children from the same selected parent before either publishes.
+Conditional publication selects A and returns `stale_parent` for B while
+preserving B as an unselected committed generation. Separate registered
+windows cover exit after commit and exit after verified publication and lock
+release. The result is local-filesystem- and interleaving-bound; it is not
+distributed compare-and-swap, hostile-writer containment, network-filesystem
+correctness, or power-loss durability.
 
 Candidate, main, and annotated-tag CI each passed all 13 jobs across Windows,
 Ubuntu, and CPython 3.11-3.13. The wheel, source distribution, and evidence
 archive matched `SHA256SUMS`; all four assets matched GitHub server digest
-metadata and public-download hashes. The installed wheel also verified the
-28-file evidence offline without PyTorch, torchvision, Pillow, or NumPy
-present. The preserved v0.1.0 and v0.2.0 releases remain the verifiers for
+metadata and fresh-download hashes. The installed wheel also verified the
+30-file evidence offline without PyTorch, torchvision, Pillow, or NumPy
+present. The preserved v0.1.0 through v0.3.0 releases remain the verifiers for
 their historical schemas and evidence inventories.
 
 This is fixture-, source-, version-, and topology-bound evidence. It is not a
 general TorchElastic or membership result, or a multi-node, GPU/NCCL, FSDP,
 arbitrary-model snapshot-semantics, performance, production, hostile-checkpoint,
-independent-review, external-use, adoption, or recruiting claim.
+independent-review, external-use, adoption, endorsement, or recruiting claim.
 
 ## Owned repository: BenchHandoff v0.2.0
 

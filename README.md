@@ -90,44 +90,53 @@ independent review, external use, adoption, endorsement, or recruiting signal.
 ## DCPInvariant
 
 [Repository](https://github.com/tiramitree/dcp-invariant) |
-[v0.3.0 release](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.3.0) |
-[public tag CI](https://github.com/tiramitree/dcp-invariant/actions/runs/30391057534)
+[v0.4.0 release](https://github.com/tiramitree/dcp-invariant/releases/tag/v0.4.0) |
+[public tag CI](https://github.com/tiramitree/dcp-invariant/actions/runs/30431967133)
 
 DCPInvariant is an Apache-2.0, CPU-only evidence harness for exact restart
-invariants around PyTorch Distributed Checkpoint. Its fixed fixture checks
-model parameters, SGD momentum, an explicit generator state, and a data cursor
-at the checkpoint and after the next registered training step.
+and generation-lineage invariants around PyTorch Distributed Checkpoint. Its
+fixed fixture checks model parameters, SGD momentum, an explicit generator
+state, and a data cursor at the checkpoint and after the next registered
+training step.
 
-The normalized schema-v3 evidence passes twelve single-host CPU/Gloo
+The normalized schema-v4 evidence passes thirteen single-host CPU/Gloo
 scenarios: four DDP restart topologies, two DTensor global-tensor restore
-topologies, one fixed real two-worker `torch.distributed.run` restart, and
-expected rejection of a rank exit without promotion, missing metadata,
-missing shard, and one-byte shard corruption. It adds one fixed two-rank
-asynchronous snapshot witness using
+topologies, one fixed real two-worker `torch.distributed.run` restart, one
+fixed two-rank asynchronous snapshot witness using
 `torchvision.models.resnet18(weights=None)`, synthetic input, and public
 writer gates. The loaded candidate matches the staged pre-mutation state and
-differs from the post-mutation state before receipt-bound promotion.
+differs from the post-mutation state before receipt-bound promotion. Four
+fault cases still fail closed.
+
+The added generation-lineage scenario commits two immutable children from the
+same selected parent. Under one registered local interleaving, conditional
+publication selects the first child and rejects the second as `stale_parent`
+without deleting either committed generation. It also checks one exit after
+commit and one exit after verified publication and lock release. This is a
+cooperating-process, ordinary-local-filesystem witness, not distributed
+compare-and-swap, hostile-writer containment, network-filesystem correctness,
+or power-loss durability.
 
 The exact compatibility contract binds PyTorch 2.11, torchvision 0.26,
 Pillow 12.3, and NumPy 2.4.6. It does not infer an operating system or
-general TorchElastic compatibility. Schema v3 has 28 ordinary files; the
-preserved v0.1.0 and v0.2.0 releases remain the verifiers for their historical
-schemas.
+general TorchElastic compatibility. Schema v4 has 30 ordinary files; the
+preserved v0.1.0 through v0.3.0 releases remain the verifiers for their
+historical schemas.
 
 The annotated tag targets
-[`c82a3d57719f2fcba8d39ec7e52d842e9e871f1b`](https://github.com/tiramitree/dcp-invariant/commit/c82a3d57719f2fcba8d39ec7e52d842e9e871f1b).
+[`7bb325704d196ebbfcbc5a9dd5fab0d5acd76fc4`](https://github.com/tiramitree/dcp-invariant/commit/7bb325704d196ebbfcbc5a9dd5fab0d5acd76fc4).
 Candidate, main, and tag CI each passed six integration jobs, six quality
 jobs, and one package-boundary job across Windows and Ubuntu with CPython
 3.11-3.13. The Release contains a wheel, source distribution, normalized
-evidence archive, and checksum file; all four passed GitHub-digest and public-
+evidence archive, and checksum file; all four passed GitHub-digest and fresh-
 download hash parity. The wheel verifies the evidence offline without
 PyTorch, torchvision, Pillow, or NumPy installed.
 
 These results are fixture-, version-, topology-, failure-point-, and
 source-bound. They do not establish arbitrary TorchElastic recovery, elastic
 membership, multi-node, GPU/NCCL, FSDP, arbitrary-model snapshot semantics,
-performance, production-reliability, hostile-checkpoint, independent-review,
-external-use, or adoption claims.
+performance, production reliability, hostile-checkpoint safety, independent
+review, external use, adoption, endorsement, or recruiting outcomes.
 
 ## Additional bounded evidence: EffectWitness
 
