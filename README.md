@@ -5,8 +5,8 @@ agent-benchmark metric, manifest, provenance, and custom-agent boundary
 auditing; agent/tool-effect evaluation; distributed-checkpoint restart
 invariants; and fail-closed recovery.
 
-My three representative owned projects are EvalFence, EffectWitness, and
-DCPInvariant; BenchHandoff and CacheInvariant are additional bounded evidence.
+My three representative owned projects are BenchHandoff, EvalFence, and
+DCPInvariant; EffectWitness and CacheInvariant are additional bounded evidence.
 Claims are tied to source revisions, public CI, releases, or committed
 normalized evidence. Maintainer-operated tests, independent review, external
 use, and production validation are different kinds of evidence.
@@ -18,7 +18,8 @@ use, and production validation are different kinds of evidence.
 - single-host distributed-checkpoint process-count restart invariants
 - experiment recovery and process-lifecycle invariants
 - version-pinned inference-cache correctness
-- Rust and Python, cross-platform CI, fault injection, and systems testing
+- Go, Rust, and Python; Kubernetes, cross-platform CI, fault injection, and
+  systems testing
 
 ## EvalFence
 
@@ -128,7 +129,7 @@ membership, multi-node, GPU/NCCL, FSDP, arbitrary-model snapshot semantics,
 performance, production-reliability, hostile-checkpoint, independent-review,
 external-use, or adoption claims.
 
-## EffectWitness
+## Additional bounded evidence: EffectWitness
 
 [Repository](https://github.com/tiramitree/effect-witness) |
 [v0.4.0 pre-release](https://github.com/tiramitree/effect-witness/releases/tag/v0.4.0) |
@@ -192,40 +193,52 @@ bounded server counters, not model-quality, generated-output, performance,
 production, cross-runtime, independent-review, external-use, or adoption
 evidence.
 
-## Additional bounded evidence: BenchHandoff
+## BenchHandoff
 
 [Repository](https://github.com/tiramitree/benchhandoff) |
-[v0.3.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.3.0) |
-[release-commit CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
-[tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml)
+[v0.4.0 release](https://github.com/tiramitree/benchhandoff/releases/tag/v0.4.0) |
+[main CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
+[main AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml) |
+[tag CI](https://github.com/tiramitree/benchhandoff/actions/workflows/ci.yml) |
+[tag AgentRun kind E2E](https://github.com/tiramitree/benchhandoff/actions/workflows/agentrun-kind.yml)
 
 BenchHandoff is an Apache-2.0 local CLI for fail-closed, resumable sequential
 experiment batches. It fingerprints suites and declared inputs, preserves
 failed attempts, verifies completed outputs before skipping them, and binds an
 approved resume to the exact evidence reviewed before mutation.
 
-Version `v0.3.0` adds opt-in suite schema v3 for one dedicated, reviewed
-workspace. It binds bounded directory topology and ordinary-file
-primary-stream bytes at preflight, launch, post-exit, recovery, bundle, and
-verification checkpoints; rejects linked, reparse, hard-linked, cross-device,
-aliased, unstable, and unsupported entries; and preserves version 1 and
-version 2 compatibility.
+Version `v0.4.0` retains the strict suite schema v3 workspace contract and
+adds an optional early-alpha Kubernetes `AgentRun` controller. An immutable
+execution specification binds an existing PVC, normalized suite path and
+SHA-256, digest-pinned runner image, and bounded deadline.
+
+The controller creates one deterministic start, resume, or verify Job at a
+time. A failed start enters `AwaitingApproval`; only the exact write-once
+approval digest permits resume, followed by fresh bundle verification. It
+also binds the owner UID, execution-spec hash, Job template, live Job UID, and
+one owned Pod, and fails closed on registered digest, approval, ownership,
+template, Pod-cardinality, and result mismatches.
 
 The annotated tag resolves to
-[`e85c565a6600d92c1a929109d02d477682375b31`](https://github.com/tiramitree/benchhandoff/commit/e85c565a6600d92c1a929109d02d477682375b31).
-Both the release-commit and tag runs passed all ten jobs. Each of the eight
-Ubuntu 24.04 and Windows Server 2025 jobs across CPython 3.11-3.14 ran 211
-tests with no failures, errors, or skips; the dependent jobs verified the
-canonical synthetic evidence and built, inspected, installed, and smoke-tested
-the exact distribution.
+[`c893f635076b57dfc830539ae5e17bb05b368813`](https://github.com/tiramitree/benchhandoff/commit/c893f635076b57dfc830539ae5e17bb05b368813).
+Main and annotated-tag CI each passed all ten jobs across Ubuntu 24.04 and
+Windows Server 2025 with CPython 3.11-3.14, canonical synthetic evidence, and
+one inspected and installed distribution build. Separate main and tag
+AgentRun workflows passed the pinned real-kind gate with Go 1.26.5, kind
+v0.32.0, and Kubernetes/kubectl v1.36.1 on one manager and one node.
 
-The Release contains the exact CI-built wheel, source distribution, and
-checksum file. Workspace checks are discrete observations, not continuous
-monitoring, a sandbox, or a hostile-writer boundary; they do not bind mode,
-ownership, timestamps, ACLs, extended attributes, NTFS alternate data streams,
-sparse layout, or unlisted metadata. These are maintainer-operated synthetic
-checks, not production reliability, independent reproduction or review,
-external use, or adoption.
+The registered gate covers deliberate failure, exact approval, resume, fresh
+verification, manager restart/adoption, declared suite-digest mismatch, wrong
+approval, duplicate-Pod rejection, and bounded cleanup. The Release contains
+only the CI-built Python wheel, source distribution, and checksum file. The Go
+manager, CRD, and reference manifests remain source-only; no controller image,
+Helm chart, production installer, or compatibility matrix is published.
+
+The reference E2E manifest uses a cluster-wide role and binding and requires
+deployment-specific review and narrowing. These owner-operated synthetic
+checks do not establish high availability, exactly-once execution, workload
+isolation, arbitrary Kubernetes compatibility, performance, production
+reliability, independent reproduction or review, external use, or adoption.
 
 ## Engineering principles
 
