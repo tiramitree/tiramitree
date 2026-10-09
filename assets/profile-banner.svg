@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="150" viewBox="0 0 900 150" role="img" aria-labelledby="title description">
+  <title id="title">Research engineering</title>
+  <desc id="description">Experiment recovery, checkpoint verification, and evaluation. Abstract connected nodes decorate the right side.</desc>
+  <defs>
+    <linearGradient id="surface" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102638"/>
+      <stop offset="1" stop-color="#0d1117"/>
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="898" height="148" rx="14" fill="url(#surface)" stroke="#33485a"/>
+  <rect x="30" y="30" width="4" height="90" rx="2" fill="#79c0ff"/>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <text x="52" y="46" fill="#a5d6ff" font-size="12" letter-spacing="2.4">RESEARCH ENGINEERING</text>
+    <text x="52" y="83" fill="#f0f6fc" font-size="28" font-weight="650">Reliable experiments.</text>
+    <text x="52" y="112" fill="#c9d1d9" font-size="13">Recovery · Checkpoint verification · Evaluation</text>
+  </g>
+  <g fill="none" stroke="#3b6580" stroke-width="1.5">
+    <path d="M615 46H690L735 75H830M615 105H690L735 75M690 46V105"/>
+    <rect x="580" y="27" width="70" height="38" rx="8" fill="#142d40"/>
+    <rect x="580" y="86" width="70" height="38" rx="8" fill="#142d40"/>
+    <rect x="797" y="56" width="70" height="38" rx="8" fill="#142d40"/>
+  </g>
+  <g fill="#79c0ff">
+    <circle cx="615" cy="46" r="4"/>
+    <circle cx="615" cy="105" r="4"/>
+    <circle cx="735" cy="75" r="5"/>
+    <circle cx="832" cy="75" r="4"/>
+  </g>
+</svg>
