@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="150" viewBox="0 0 900 150" role="img" aria-labelledby="title description">
-  <title id="title">Research engineering</title>
-  <desc id="description">Experiment recovery, checkpoint verification, and evaluation. Abstract connected nodes decorate the right side.</desc>
+  <title id="title">Projects and publications</title>
+  <desc id="description">Selected projects and a publication, with source, experiments, and verification. Abstract connected nodes decorate the right side.</desc>
   <defs>
     <linearGradient id="surface" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#102638"/>
@@ -10,9 +10,9 @@
   <rect x="1" y="1" width="898" height="148" rx="14" fill="url(#surface)" stroke="#33485a"/>
   <rect x="30" y="30" width="4" height="90" rx="2" fill="#79c0ff"/>
   <g font-family="ui-sans-serif, system-ui, sans-serif">
-    <text x="52" y="46" fill="#a5d6ff" font-size="12" letter-spacing="2.4">RESEARCH ENGINEERING</text>
-    <text x="52" y="83" fill="#f0f6fc" font-size="28" font-weight="650">Reliable experiments.</text>
-    <text x="52" y="112" fill="#c9d1d9" font-size="13">Recovery · Checkpoint verification · Evaluation</text>
+    <text x="52" y="46" fill="#a5d6ff" font-size="12" letter-spacing="2.4">SELECTED WORK</text>
+    <text x="52" y="83" fill="#f0f6fc" font-size="28" font-weight="650">Projects &amp; publications.</text>
+    <text x="52" y="112" fill="#c9d1d9" font-size="13">Source · Experiments · Verification</text>
   </g>
   <g fill="none" stroke="#3b6580" stroke-width="1.5">
     <path d="M615 46H690L735 75H830M615 105H690L735 75M690 46V105"/>
